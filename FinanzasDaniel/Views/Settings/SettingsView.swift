@@ -33,7 +33,7 @@ struct SettingsView: View {
                     Button {
                         showingWalletSetup = true
                     } label: {
-                        Label("Configurar Apple Wallet", systemImage: "creditcard.and.1.line")
+                        Label("Configurar Apple Wallet", systemImage: "creditcard")
                     }
                 }
                 

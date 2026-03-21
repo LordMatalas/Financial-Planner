@@ -5,14 +5,14 @@
 .gemini/
 
 # ── Spec-Kit generated scratch documents (kept tracked below) ──────
-# constitution.md  → ignored (internal guardrails)
-# spec.md          → ignored (intermediate output)
-# plan.md          → ignored (intermediate output)
-# tasks.md         → ignored (intermediate output)
-constitution.md
-spec.md
-plan.md
-tasks.md
+# /constitution.md  → ignored (internal guardrails — tracked copy lives in specs/)
+# /spec.md          → ignored (intermediate output — tracked copy lives in specs/)
+# /plan.md          → ignored (intermediate output — tracked copy lives in specs/)
+# /tasks.md         → ignored (intermediate output — tracked copy lives in specs/)
+/constitution.md
+/spec.md
+/plan.md
+/tasks.md
 
 # ── macOS ──────────────────────────────────────────────────────────
 .DS_Store

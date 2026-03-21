@@ -7,7 +7,7 @@ struct WalletSetupView: View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
-                    Image(systemName: "creditcard.and.1.line")
+                    Image(systemName: "creditcard")
                         .font(.system(size: 60))
                         .foregroundColor(.accentColor)
                         .frame(maxWidth: .infinity)

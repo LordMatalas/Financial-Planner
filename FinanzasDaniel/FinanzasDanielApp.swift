@@ -23,6 +23,7 @@ struct FinanzasDanielApp: App {
             ContentView()
                 .modelContainer(container)
                 .onAppear {
+                    NotificationManager.shared.requestAuthorization()
                     seedInitialData()
                 }
         }
