@@ -19,8 +19,8 @@ class GoalsViewModel {
             name: name,
             emoji: emoji,
             targetAmount: targetAmount,
-            monthlyContribution: monthlyContribution,
-            deadline: deadline
+            deadline: deadline,
+            monthlyContribution: monthlyContribution
         )
         modelContext.insert(newGoal)
     }

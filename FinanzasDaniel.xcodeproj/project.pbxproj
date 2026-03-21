@@ -47,6 +47,7 @@
 		249E7A1195AD61B6521F11CA /* GoalCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalCardView.swift; sourceTree = "<group>"; };
 		2E06B1D8EA0A42A372958EEC /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		2F615E4A589BCEB38639FFDF /* ProgressRingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressRingView.swift; sourceTree = "<group>"; };
+		328450E01233324E93B8D755 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		32A27B41A3CB7EE67ECF93B2 /* Expense.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Expense.swift; sourceTree = "<group>"; };
 		34A6A7BADD737E2B93453294 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		399C64EA1A5320E56FF9EC47 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
@@ -62,7 +63,7 @@
 		93CC9379FC754328DD044F26 /* AddGoalSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGoalSheet.swift; sourceTree = "<group>"; };
 		97D2F6C094E44E717832FA9F /* RegisterWalletExpenseIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterWalletExpenseIntent.swift; sourceTree = "<group>"; };
 		9C2F66A4AC188550AF2512D1 /* GoalsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalsViewModel.swift; sourceTree = "<group>"; };
-		A07F3466B397ADCF3189AD8C /* FinanzasDaniel.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = FinanzasDaniel.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A07F3466B397ADCF3189AD8C /* FinanzasDaniel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FinanzasDaniel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADD64122F73449DE1741E6B7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		B9D58145E5BAAC1215C2F6DB /* AddExpenseSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddExpenseSheet.swift; sourceTree = "<group>"; };
 		BABC1ED330FE60C6C9F5D63F /* FixedExpense.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedExpense.swift; sourceTree = "<group>"; };
@@ -190,6 +191,7 @@
 			children = (
 				ADD64122F73449DE1741E6B7 /* ContentView.swift */,
 				7A932F53DDD6B7503AD5A9A4 /* FinanzasDanielApp.swift */,
+				328450E01233324E93B8D755 /* Info.plist */,
 				0B70CE3D7BCC2EDB99CB5BD1 /* AppIntents */,
 				AFA17BF90D014B739A593B22 /* Models */,
 				30C7C68FFDB0C55CAB53F6E8 /* Utilities */,
@@ -255,8 +257,6 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1430;
-				TargetAttributes = {
-				};
 			};
 			buildConfigurationList = 27AA1D6B1F8E8B75C36D3591 /* Build configuration list for PBXProject "FinanzasDaniel" */;
 			developmentRegion = en;
@@ -318,11 +318,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_ASSET_PATHS = "FinanzasDaniel/Preview Content";
+				DEVELOPMENT_TEAM = HF6RUSAGZ3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_FILE = FinanzasDaniel/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -457,11 +456,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_ASSET_PATHS = "FinanzasDaniel/Preview Content";
+				DEVELOPMENT_TEAM = HF6RUSAGZ3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_FILE = FinanzasDaniel/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
