@@ -1,8 +1,8 @@
 # Feature Specification: Financial Planner (FinanzasDaniel)
 
-**Feature Branch**: `001-initial-spec`  
+**Feature Branch**: `001-initial-app`  
 **Created**: 2026-03-21  
-**Status**: Draft  
+**Status**: Completed  
 **Input**: FinanzasDaniel_AppSpec.md
 
 ## User Scenarios & Testing
@@ -28,7 +28,7 @@ As Daniel, I want my Apple Wallet payments to be automatically recorded as "gast
 **Independent Test**: Simulate an AppIntent call with amount and merchant, and verify it appears in the expenses list.
 
 **Acceptance Scenarios**:
-1. **Given** the app is installed, **When** a Shortcut triggers the `RegisterWalletExpenseIntent` with $8,500 from "Juan Valdez", **Then** a new expense is saved with category "Food".
+31. **Given** the app is installed, **When** a Shortcut triggers the `RegisterWalletExpenseIntent` with $8,500 from "Juan Valdez", **Then** a new expense is saved with category "Food" AND a local notification is sent to the user.
 
 ---
 
@@ -50,7 +50,8 @@ As Daniel, I want to see my "Free Balance" (Ingresos - Gastos Fijos - Gastos Var
 - **FR-003**: System MUST calculate projected completion dates dynamically.
 - **FR-004**: System MUST allow manual and automated (Wallet) expense entry.
 - **FR-005**: System MUST provide a monthly budget visualization for variable expenses.
-- **FR-006**: System MUST send local notifications for budget alerts (80%) and daily reminders.
+- FR-006**: System MUST send local notifications for budget alerts (80%), daily reminders, and successful Wallet registrations.
+- **FR-007**: System MUST be buildable using XcodeGen (`project.yml`) to ensure project file consistency.
 
 ### Key Entities
 

@@ -1,6 +1,6 @@
 # Implementation Plan: FinanzasDaniel
 
-**Branch**: `001-initial-setup` | **Date**: 2026-03-21 | **Spec**: [spec.md](spec.md)
+**Branch**: `001-initial-app` | **Date**: 2026-03-21 | **Spec**: [spec.md](spec.md)
 
 ## Summary
 Building a native iOS application for personal finance management using SwiftUI for the UI and SwiftData for persistence. The app focuses on Goal Tracking and Automated Expense Logging via Apple Wallet integration.
@@ -22,6 +22,7 @@ Building a native iOS application for personal finance management using SwiftUI 
 FinanzasDaniel/
 ├── FinanzasDanielApp.swift          # App Entry & ModelContainer
 ├── ContentView.swift                # Main TabView
+├── Info.plist                       # App configuration
 ├── Models/                          # SwiftData Models
 │   ├── SavingsGoal.swift
 │   ├── Expense.swift
@@ -40,8 +41,17 @@ FinanzasDaniel/
 │   └── RegisterWalletExpenseIntent.swift
 └── Utilities/                       # Helpers
     ├── CurrencyFormatter.swift
-    └── DateHelpers.swift
+    └── NotificationManager.swift
+project.yml                          # XcodeGen configuration
+README.md                            # Documentation
 ```
+
+## Build System
+
+The project uses **XcodeGen** to maintain a clean Git history without the binary bloat of `.xcodeproj`.
+- **Source of Truth**: `project.yml`
+- **Command**: `xcodegen`
+- **Output**: `FinanzasDaniel.xcodeproj` (Untracked in history but generated for development)
 
 ## Constitution Check
 
