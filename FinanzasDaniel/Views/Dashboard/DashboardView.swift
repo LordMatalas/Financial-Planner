@@ -1,179 +1,188 @@
 import SwiftUI
-import SwiftData
 
 struct DashboardView: View {
-    @Environment(\.modelContext) private var modelContext
-    @Query private var goals: [SavingsGoal]
-    @Query private var expenses: [Expense]
-    @Query private var fixedExpenses: [FixedExpense]
-    
-    @State private var viewModel: DashboardViewModel?
-
     var body: some View {
-        NavigationStack {
-            ScrollView {
-                VStack(spacing: 20) {
-                    // Monthly Flow Card
-                    monthlyFlowCard
+        ScrollView {
+            VStack(spacing: 32) {
+                headerSection
+                heroCard
+                goalsSection
+                expensesSection
+                
+                Spacer(minLength: 100) // Space for TabBar
+            }
+            .padding(.top, 16)
+        }
+        .background(Color.bgBase)
+    }
+    
+    private var headerSection: some View {
+        HStack {
+            VStack(alignment: .leading, spacing: 4) {
+                Text("Hola, Daniel 👋")
+                    .font(.display(size: 26))
+                    .foregroundColor(.textPrimary)
+                Text("Marzo 2026")
+                    .font(.bodyText(size: 14))
+                    .foregroundColor(.textSecondary)
+            }
+            Spacer()
+            Button(action: {}) {
+                Image(systemName: "gearshape.fill")
+                    .font(.system(size: 22))
+                    .foregroundColor(.textSecondary)
+            }
+        }
+        .padding(.horizontal, 20)
+    }
+    
+    private var heroCard: some View {
+        AntigravityCard {
+            VStack(alignment: .leading, spacing: 16) {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("SALDO LIBRE ESTE MES")
+                        .font(.system(size: 12, weight: .semibold))
+                        .kerning(1.2)
+                        .foregroundColor(.textSecondary)
                     
-                    // Goal Progress Mini Cards
-                    goalsSummarySection
-                    
-                    // Category Chart
-                    categoryBreaksdownSection
+                    Text("$847.000")
+                        .font(.moneyNumber(size: 38, weight: .bold))
+                        .foregroundColor(.accentMint)
                 }
-                .padding()
-            }
-            .navigationTitle(currentMonthTitle)
-            .onAppear {
-                if viewModel == nil {
-                    viewModel = DashboardViewModel(modelContext: modelContext)
-                }
-            }
-        }
-    }
-    
-    private var dashboardViewModel: DashboardViewModel {
-        viewModel ?? DashboardViewModel(modelContext: modelContext)
-    }
-    
-    private var currentMonthTitle: String {
-        Date().formatted(.dateTime.month(.wide).year())
-    }
-    
-    private var monthlyFlowCard: some View {
-        let flow = dashboardViewModel.calculateMonthlyFlow(fixed: fixedExpenses, variable: expenses)
-        
-        return VStack(spacing: 16) {
-            HStack {
-                Text("Flujo Mensual")
-                    .font(.headline)
-                Spacer()
-                Text(flow.freeBalance.cop)
-                    .font(.title2).bold()
-                    .foregroundColor(flow.freeBalance >= 0 ? .green : .red)
-                    .monospacedDigit()
-            }
-            
-            Divider()
-            
-            HStack {
-                FlowItem(title: "Ingresos", amount: dashboardViewModel.monthlyIncome.cop, color: .primary)
-                Spacer()
-                FlowItem(title: "Gastos Fijos", amount: flow.fixedTotal.cop, color: .secondary)
-                Spacer()
-                FlowItem(title: "Gastos Var.", amount: flow.variableTotal.cop, color: .secondary)
-            }
-        }
-        .padding()
-        .background(Color(.systemBackground))
-        .clipShape(RoundedRectangle(cornerRadius: 16))
-        .shadow(color: Color.black.opacity(0.05), radius: 10, x: 0, y: 5)
-    }
-    
-    private var goalsSummarySection: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text("Metas Activas")
-                .font(.headline)
-            
-            if goals.filter({ $0.isActive }).isEmpty {
-                Text("No hay metas activas")
-                    .foregroundColor(.secondary)
-                    .padding()
-            } else {
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 12) {
-                        ForEach(goals.filter({ $0.isActive })) { goal in
-                            GoalMiniCard(goal: goal)
-                        }
-                    }
+                
+                Divider()
+                    .background(Color.borderSubtle)
+                
+                HStack(spacing: 0) {
+                    metricCol(title: "Ingresos", amount: "$2.450.000", color: .accentMint)
+                    Spacer()
+                    metricCol(title: "Fijos", amount: "$1.300.000", color: .accentRose.opacity(0.6))
+                    Spacer()
+                    metricCol(title: "Variables", amount: "$303.000", color: .accentAmber)
                 }
             }
         }
+        .padding(.horizontal, 20)
     }
     
-    private var categoryBreaksdownSection: some View {
-        let categoryStats = dashboardViewModel.expensesByCategory(expenses: expenses)
-        let maxAmount = categoryStats.map { $0.amount }.max() ?? 1
-        
-        return VStack(alignment: .leading, spacing: 16) {
-            Text("Gastos por Categoría")
-                .font(.headline)
-            
-            if categoryStats.isEmpty {
-                Text("Sin gastos registrados este mes")
-                    .foregroundColor(.secondary)
-                    .padding()
-            } else {
-                VStack(spacing: 12) {
-                    ForEach(categoryStats, id: \.category) { stat in
-                        VStack(alignment: .leading, spacing: 4) {
-                            HStack {
-                                Text("\(stat.category.emoji) \(stat.category.rawValue)")
-                                    .font(.caption)
-                                Spacer()
-                                Text(stat.amount.cop)
-                                    .font(.caption).bold()
-                                    .monospacedDigit()
-                            }
-                            
-                            GeometryReader { geometry in
-                                Capsule()
-                                    .fill(Color.accentColor.opacity(0.8))
-                                    .frame(width: geometry.size.width * CGFloat(stat.amount / maxAmount))
-                            }
-                            .frame(height: 8)
-                        }
-                    }
-                }
-            }
-        }
-        .padding()
-        .background(Color(.systemBackground))
-        .clipShape(RoundedRectangle(cornerRadius: 16))
-    }
-}
-
-struct FlowItem: View {
-    let title: String
-    let amount: String
-    let color: Color
-    
-    var body: some View {
+    private func metricCol(title: String, amount: String, color: Color) -> some View {
         VStack(alignment: .leading, spacing: 4) {
             Text(title)
-                .font(.caption2)
-                .foregroundColor(.secondary)
+                .font(.system(size: 11))
+                .foregroundColor(.textSecondary)
             Text(amount)
-                .font(.caption).bold()
-                .monospacedDigit()
+                .font(.moneyNumber(size: 15, weight: .semibold))
                 .foregroundColor(color)
         }
     }
-}
-
-struct GoalMiniCard: View {
-    let goal: SavingsGoal
     
-    var body: some View {
-        VStack(alignment: .leading) {
-            Text(goal.emoji)
-                .font(.title2)
-            Text(goal.name)
-                .font(.caption).bold()
+    private var goalsSection: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            HStack {
+                Text("Tus metas")
+                    .font(.heading(size: 16))
+                    .foregroundColor(.textPrimary)
+                Spacer()
+                Button(action: {}) {
+                    Text("Ver todas →")
+                        .font(.system(size: 13))
+                        .foregroundColor(.accentViolet)
+                }
+            }
+            .padding(.horizontal, 20)
+            
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 16) {
+                    miniGoalCard(emoji: "🏍️", name: "BMW G 310...", progress: 0.34, percentStr: "34%", subtitle: "Mes 14")
+                    miniGoalCard(emoji: "🛡️", name: "Fondo emerg.", progress: 0.26, percentStr: "26%", subtitle: "Mes 8")
+                    miniGoalCard(emoji: "✈️", name: "Viaje a Med.", progress: 0.67, percentStr: "67%", subtitle: "Mes 2")
+                }
+                .padding(.horizontal, 20)
+            }
+        }
+    }
+    
+    private func miniGoalCard(emoji: String, name: String, progress: Double, percentStr: String, subtitle: String) -> some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text(emoji)
+                .font(.system(size: 32))
+            
+            Text(name)
+                .font(.system(size: 13, weight: .medium))
+                .foregroundColor(.textPrimary)
                 .lineLimit(1)
             
-            let progress = goal.targetAmount > 0 ? goal.savedAmount / goal.targetAmount : 0
-            let remaining = goal.targetAmount - goal.savedAmount
-            let months = goal.monthlyContribution > 0 ? Int(ceil(remaining / goal.monthlyContribution)) : 0
+            ProgressBar(progress: progress)
             
-            Text("\(Int(progress * 100))% • \(months) m")
-                .font(.system(size: 10))
-                .foregroundColor(.secondary)
+            HStack {
+                Text(percentStr)
+                    .font(.moneyNumber(size: 13))
+                    .foregroundColor(.accentMint)
+                Spacer()
+                Text(subtitle)
+                    .font(.system(size: 11))
+                    .foregroundColor(.textTertiary)
+            }
         }
-        .frame(width: 100)
-        .padding()
-        .background(Color(.secondarySystemBackground))
-        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .padding(16)
+        .frame(width: 140, height: 160)
+        .background(Color.bgElevated)
+        .cornerRadius(18)
     }
+    
+    private var expensesSection: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            Text("Hoy · $37.500 gastados")
+                .font(.system(size: 14, weight: .medium))
+                .foregroundColor(.textPrimary)
+                .padding(.horizontal, 20)
+            
+            VStack(spacing: 0) {
+                expenseRow(emoji: "🍔", name: "Juan Valdez", amount: "$8.500", category: "Café · Chapinero", type: .wallet, color: .accentMint)
+                Divider().background(Color.borderSubtle).padding(.leading, 70)
+                expenseRow(emoji: "🚌", name: "SITP", amount: "$4.200", category: "Transporte", type: .wallet, color: .accentViolet)
+            }
+            .padding(.horizontal, 20)
+        }
+    }
+    
+    enum ExpenseType { case wallet, manual }
+    
+    private func expenseRow(emoji: String, name: String, amount: String, category: String, type: ExpenseType, color: Color) -> some View {
+        HStack(spacing: 16) {
+            Circle()
+                .fill(color.opacity(0.1))
+                .frame(width: 40, height: 40)
+                .overlay(Text(emoji))
+            
+            VStack(alignment: .leading, spacing: 4) {
+                Text(name)
+                    .font(.bodyText(size: 15))
+                    .foregroundColor(.textPrimary)
+                HStack {
+                    Text(category)
+                        .font(.system(size: 13))
+                        .foregroundColor(.textSecondary)
+                    Spacer()
+                    Image(systemName: type == .wallet ? "creditcard.fill" : "pencil")
+                        .font(.system(size: 10))
+                        .foregroundColor(.textTertiary)
+                        .padding(4)
+                        .background(Color.bgElevated)
+                        .clipShape(Capsule())
+                }
+            }
+            
+            Spacer()
+            
+            Text(amount)
+                .font(.moneyNumber(size: 15))
+                .foregroundColor(.textPrimary)
+        }
+        .padding(.vertical, 12)
+    }
+}
+
+#Preview {
+    DashboardView()
 }

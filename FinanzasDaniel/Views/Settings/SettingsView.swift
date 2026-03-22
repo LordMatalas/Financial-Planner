@@ -1,4 +1,5 @@
 import SwiftUI
+import PassKit
 
 struct SettingsView: View {
     @AppStorage("monthlyIncome") private var monthlyIncome: Double = 2450000
@@ -7,6 +8,7 @@ struct SettingsView: View {
     @AppStorage("budgetAlertEnabled") private var budgetAlertEnabled = true
     
     @State private var showingWalletSetup = false
+    @State private var isWalletLinked: Bool = false
     
     var body: some View {
         NavigationStack {
@@ -33,7 +35,24 @@ struct SettingsView: View {
                     Button {
                         showingWalletSetup = true
                     } label: {
-                        Label("Configurar Apple Wallet", systemImage: "creditcard")
+                        HStack {
+                            Label("Configurar Apple Wallet", systemImage: "creditcard")
+                                .foregroundColor(.primary)
+                            Spacer()
+                            if isWalletLinked {
+                                Text("Vinculado")
+                                    .font(.subheadline)
+                                    .foregroundColor(.secondary)
+                                Image(systemName: "checkmark.circle.fill")
+                                    .foregroundColor(.green)
+                            } else {
+                                Text("No Validado")
+                                    .font(.subheadline)
+                                    .foregroundColor(.secondary)
+                                Image(systemName: "exclamationmark.triangle.fill")
+                                    .foregroundColor(.yellow)
+                            }
+                        }
                     }
                 }
                 
@@ -51,6 +70,9 @@ struct SettingsView: View {
             .navigationTitle("Ajustes")
             .sheet(isPresented: $showingWalletSetup) {
                 WalletSetupView()
+            }
+            .onAppear {
+                isWalletLinked = PKPaymentAuthorizationController.canMakePayments()
             }
         }
     }
