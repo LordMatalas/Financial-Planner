@@ -25,12 +25,14 @@
 		82100A72601B013A05E10AA8 /* SavingsGoal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4999F47E671906A1F2A9BEB6 /* SavingsGoal.swift */; };
 		83BC8D4A1F66C9EB3871EB42 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD64122F73449DE1741E6B7 /* ContentView.swift */; };
 		88FEA2BA18058C97E49EABA4 /* DashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420ECAB2CBA3629D408BFB23 /* DashboardViewModel.swift */; };
+		93D38FAA655D36DA65CFFFE8 /* Cosmic Black 310 GS.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 05896D0D64EA689C1A396626 /* Cosmic Black 310 GS.jpg */; };
 		98F6F0757DCF21B12235B398 /* ProgressRingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F615E4A589BCEB38639FFDF /* ProgressRingView.swift */; };
 		A53E0099DD0A88E1974543F7 /* ExpensesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB3870C0367780C09395B8B /* ExpensesViewModel.swift */; };
 		A74DA7289F2BB414ACE06FF3 /* Contribution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09138B25E6D6B8273FF364E6 /* Contribution.swift */; };
 		BCDFBFC8F6DB3E0B8C66ED92 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 399C64EA1A5320E56FF9EC47 /* NotificationManager.swift */; };
 		BDFA0569293E8BD20FDDA329 /* GoalsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08CD6B5605DB78D1CDFBE4F6 /* GoalsView.swift */; };
 		BE371E49CA2808FF5525B666 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667F8B6B403ED06E69DAF1C3 /* Enums.swift */; };
+		C5231499D3C8A11A36B984EE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1A09667DEC6FFBE58687E428 /* Assets.xcassets */; };
 		E14BC8EA4D85983E96A11EF2 /* AddExpenseSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D58145E5BAAC1215C2F6DB /* AddExpenseSheet.swift */; };
 		E6413FC8A9F0CE8FD8BF6995 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4086DAFD8397AEA6FC99F427 /* SwiftUI.framework */; };
 		ECF8415998234F9B0BDC39C2 /* SwiftData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51BB0D10D9F68D4115EDC5BA /* SwiftData.framework */; };
@@ -39,10 +41,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		05896D0D64EA689C1A396626 /* Cosmic Black 310 GS.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Cosmic Black 310 GS.jpg"; sourceTree = "<group>"; };
 		08CD6B5605DB78D1CDFBE4F6 /* GoalsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalsView.swift; sourceTree = "<group>"; };
 		09138B25E6D6B8273FF364E6 /* Contribution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contribution.swift; sourceTree = "<group>"; };
 		0CB925DDC14EE22262A80030 /* AddContributionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContributionSheet.swift; sourceTree = "<group>"; };
 		1034FFA37AEDC553EFA3CB67 /* GoalDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalDetailView.swift; sourceTree = "<group>"; };
+		1A09667DEC6FFBE58687E428 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1BB3870C0367780C09395B8B /* ExpensesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesViewModel.swift; sourceTree = "<group>"; };
 		249E7A1195AD61B6521F11CA /* GoalCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalCardView.swift; sourceTree = "<group>"; };
 		2E06B1D8EA0A42A372958EEC /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
@@ -189,7 +193,9 @@
 		B8C11F234D5C8C545382167E /* FinanzasDaniel */ = {
 			isa = PBXGroup;
 			children = (
+				1A09667DEC6FFBE58687E428 /* Assets.xcassets */,
 				ADD64122F73449DE1741E6B7 /* ContentView.swift */,
+				05896D0D64EA689C1A396626 /* Cosmic Black 310 GS.jpg */,
 				7A932F53DDD6B7503AD5A9A4 /* FinanzasDanielApp.swift */,
 				328450E01233324E93B8D755 /* Info.plist */,
 				0B70CE3D7BCC2EDB99CB5BD1 /* AppIntents */,
@@ -236,6 +242,7 @@
 			buildConfigurationList = DA04D360F569204B8076CB9E /* Build configuration list for PBXNativeTarget "FinanzasDaniel" */;
 			buildPhases = (
 				922C3B051945B73617CF5A99 /* Sources */,
+				5875C070A5DB2508E36DC62B /* Resources */,
 				1522BD3108FF6B17BDA82EE2 /* Frameworks */,
 			);
 			buildRules = (
@@ -276,6 +283,18 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		5875C070A5DB2508E36DC62B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C5231499D3C8A11A36B984EE /* Assets.xcassets in Resources */,
+				93D38FAA655D36DA65CFFFE8 /* Cosmic Black 310 GS.jpg in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		922C3B051945B73617CF5A99 /* Sources */ = {
