@@ -1,0 +1,53 @@
+# Implementation Strategy for FinanzasDaniel v0.2: Functional Onboarding
+
+## Architecture Overview
+- **Shared State**: `AppState` as a global `@Observable` singleton. Injected via `.environment(appState)` in `FinanzasDanielApp.swift`.
+- **Logic Isolation**: All financial arithmetic in `BudgetCalculator.swift` (pure functions) for testability.
+- **Persistence**: Hybrid approach. `UserDefaults` for onboarding data and `SwiftData` for financial entities.
+- **Notifications**: Centralized in `NotificationScheduler`. Category `FIXED_EXPENSE_REMINDER` with actions `PAID` (create Expense) and `SNOOZE` (reschedule +24h).
+
+## File Details
+
+### AppState.swift
+```swift
+@Observable class AppState {
+    static let shared = AppState()
+    
+    // Core data from UserDefaults
+    var monthlyIncome: Double { ... }
+    var payDay: Int { ... }
+    var onboardingComplete: Bool { ... }
+    
+    // Live calculated properties via SwiftData queries or passed from context
+    func recalculateSuggestedBudget() { ... }
+    func scheduleAllNotifications() { ... }
+}
+```
+
+### NotificationScheduler.swift
+- `UNUserNotificationCenterDelegate` implementation.
+- `userNotificationCenter(_:didReceive:withCompletionHandler:)` handles `actionIdentifier == "PAID"`.
+- Uses `ModelContainer.mainContext` from `AppState` to insert new `Expense` records.
+
+### OnboardingFlow.swift
+- `enum OnboardingStep: Int, CaseIterable`.
+- Uses `withAnimation(.spring(response: 0.5, dampingFraction: 0.75))` for transitions.
+- Child views use local state for input, only pushing to `AppState` or `SwiftData` on completion.
+
+### Components/StatsComparisonCard.swift
+- Uses `Canvas` to draw bar charts with `context.fill(Path(rect...), with: .color(color))`.
+- Two bars per category (current year-month vs previous).
+- Opacity 30% for the previous month's bars.
+
+### Components/HeroNumberInput.swift
+- Custom `TextField` wrapper with `NSNumberFormatter` for currency.
+- Headline font: SF Mono, 52pt, Bold.
+- Dynamic layout based on value length.
+
+## Model Extensions
+- `FixedExpense`: `var paidThisMonth: Bool`, `var lastPaidDate: Date?`.
+- `MonthlySnapshot`: Snapshotting logic triggered in `AppState.snapshotPreviousMonthIfNeeded()`.
+
+## Data Wiring Logic
+- `DashboardHeroCard` updates whenever `AppState.currentMonthExpenses` changes.
+- `AppState.currentMonthExpenses` is kept in sync via a hidden `Query` in the background or observing `Expense` collection in `AppState`.

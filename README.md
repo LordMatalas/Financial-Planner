@@ -4,12 +4,14 @@ FinanzasDaniel is a modern, 100% native iOS application built specifically to tr
 
 ![FinanzasDaniel Dashboard Mockup](docs/mockup.png)
 
-## 🚀 Features
+## 🚀 Features (Updated v1.1)
 
-*   **Metas (Goals)**: Track savings targets with dynamic circular progress rings.
+*   **Smart Onboarding**: A 5-step interactive flow to set up income, fixed expenses, and savings goals with real-time budget projections.
+*   **Metas (Goals)**: Professional goal editor with emoji picker, percentage-of-income tracking, and age-based completion projections.
+*   **Comparison Engine**: New Dashboard cards to compare current vs. previous month spending, savings, and free balance.
 *   **Gastos Hormiga (Expenses)**: Quickly log daily expenses with Apple Wallet automation via AppIntents.
-*   **Dashboard**: Monitor your monthly "Free Balance" flow and see spending breakdowns by category.
-*   **Alerts**: Get daily reminders to log expenses and budget warnings via Local Notifications.
+*   **Categorical Analytics**: Visual bar charts comparing spending by category between periods.
+*   **Alerts**: Daily reminders and budget threshold notifications via `NotificationManager`.
 
 ## 🛠️ Tech Stack
 

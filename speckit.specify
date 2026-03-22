@@ -1,0 +1,182 @@
+Feature: Functional Onboarding + Logic Layer Connection for FinanzasDaniel v0.2
+
+CONTEXT
+The app compiled successfully (v0.1) with premium UI but no data persistence or logic. 
+This feature wires everything together and adds the onboarding flow.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+USER STORY 1 — First launch onboarding
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+As a first-time user, I want to set up the app through a guided flow so that 
+it knows my financial reality before showing me anything.
+
+STEP 1 — Welcome splash (non-interactive, 2.5s or tap to skip)
+  - Large emoji animation: 🏍️ → 💰 → 📈 (morphs with spring)
+  - Headline: "Hola. Vamos a ordenar tus finanzas."
+  - Subline: "4 preguntas. 2 minutos. Sin excusas."
+  - Auto-advances or tap anywhere
+
+STEP 2 — Ingreso mensual
+  - Question: "¿Cuánto entra cada mes?"
+  - Large hero number input (SF Mono, 52pt): "$0" → user types amount
+  - Subtext: "Escribe tu salario neto — lo que llega a tu cuenta."
+  - Below input: "¿Qué día te pagan?" → segmented or scroll picker (1–31)
+  - Validation: amount > 0, day 1–31. CTA disabled until valid.
+  - CTA: "Eso es todo por aquí →"
+
+STEP 3 — Gastos fijos
+  - Question: "¿Qué gastos fijos tienes?"
+  - Subtext: "Arriendo, créditos, suscripciones... lo que sale sí o sí."
+  - Preset chips to tap (multi-select, adds with default amount):
+    [Icetex] [Arriendo] [Crédito] [Netflix] [Spotify] [Gym] [+ Agregar]
+  - Each selected chip expands to inline editable row:
+    [Icono] [Nombre]  [$Monto]  [Día de pago: DD]  [×]
+  - "Agregar" → inline empty row to fill
+  - User can set: nombre, monto, día del mes en que cae el pago
+  - Minimum 0 fixed expenses (can skip). CTA always enabled.
+  - CTA: "Guardados →"
+
+STEP 4 — Meta / Proyecto de ahorro
+  - Question: "¿Hacia qué estás ahorrando?"
+  - Subtext: "Puede ser una moto, un viaje, un colchón. Lo que sea."
+  - Goal card editor (inline):
+    - Emoji picker (grid de 40 emojis categorizados)
+    - Nombre (TextField)
+    - Monto meta ($)  
+    - Fecha límite (DatePicker — optional, toggle "¿Tiene fecha límite?")
+    - Aporte mensual ($) — con hint: "¿Cuánto puedes apartar cada mes?"
+  - "Agregar otra meta +" link below card (same inline editor, stacked)
+  - Pre-filled suggestion: 🏍️ "BMW G 310 GS" $13.250.000 — user can edit or delete
+  - Minimum 1 goal required. CTA disabled until at least 1 goal has name + amount.
+  - CTA: "Ya casi →"
+
+STEP 5 — Budget suggestion + notification permission
+  - Headline: "Aquí va tu panorama, Daniel."
+  - Show calculated breakdown card (read-only):
+    ┌─────────────────────────────────────┐
+    │ Tu ingreso mensual      $2.450.000  │
+    │ Gastos fijos           −$1.300.000  │
+    │ Aporte a metas         −$1.200.000  │
+    │ Colchón (10%)           −$245.000   │
+    ├─────────────────────────────────────┤
+    │ Para gastos del día a día $305.000  │  ← accent-mint, large
+    └─────────────────────────────────────┘
+  - Below card: "Este es el presupuesto que calculamos para tus gastos 
+    variables. No te preguntamos — lo calculamos por ti."
+    [info icon] → expandable: explains the formula in plain Spanish
+  
+  - Below that: notification opt-in card
+    Icon: bell.badge.fill (accent-mint)
+    Title: "¿Te avisamos cuando toca pagar?"
+    Body: "Te recordamos un día antes de cada gasto fijo y te preguntamos 
+           si ya lo hiciste."
+    CTA: "Sí, activar notificaciones" (primary button)
+    Secondary: "Ahora no" (text button, text-secondary)
+  
+  - Main CTA: "Entrar →" (enabled regardless of notification choice)
+  - On tap: mark onboarding_complete = true → navigate to MainTabView with 
+    .transition(.asymmetric(insertion:.move(edge:.trailing), removal:.opacity))
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+USER STORY 2 — Stats card con comparativa mes anterior
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+As a user on the Dashboard, I want to see how this month compares to last month 
+so I can know if I'm improving.
+
+STATS CARD (in DashboardView, after the Hero Card):
+  - Title: "vs. mes anterior"
+  - 3 metrics side by side:
+    1. Gastos variables: "$303.000  ↓12%" (green if less than last month)
+    2. Ahorro logrado:   "$600.000  ↑8%"  (green if more)
+    3. Saldo libre:      "$847.000  ↑5%"  (green if more)
+  - Each metric: value in SF Mono + delta chip (↑/↓ + %) colored semantically
+  - Below metrics: horizontal bar chart (SwiftUI Canvas, no Charts framework)
+    Two bars per category (current month = solid, last month = 30% opacity)
+    Categories: Comida / Transporte / Ocio / Otros
+    Bar height max 80pt, animated on appear
+  - Empty state (first month): "Aún no hay mes anterior para comparar. 
+    Vuelve en [X] days." — shown with a dotted border card
+
+DATA MODEL — MonthlySnapshot:
+  @Model class MonthlySnapshot {
+    var id: UUID
+    var year: Int
+    var month: Int          // 1–12
+    var totalIncome: Double
+    var totalFixedExpenses: Double
+    var totalVariableExpenses: Double
+    var totalSaved: Double  // sum of contributions that month
+    var expensesByCategory: [String: Double]  // category rawValue: amount
+    var createdAt: Date
+  }
+  
+  Auto-created: on first launch of a new calendar month, snapshot the previous month's data.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+USER STORY 3 — Fixed expense payment notifications
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+As a user, I want to be reminded the day before a fixed expense is due and be 
+asked if I already paid it, so I never miss a payment or forget to track it.
+
+NOTIFICATION BEHAVIOR:
+  - Scheduled: every month on (dueDay - 1) at 8:00 AM
+  - Title: "💸 Mañana toca pagar [Nombre]"
+  - Body: "Son $[Monto]. ¿Ya lo hiciste?"
+  - Actions (UNNotificationAction):
+    - "Sí, ya pagué" (identifier: "PAID") — foreground: false, destructive: false
+    - "Recordar mañana" (identifier: "SNOOZE") — foreground: false
+
+  PAID action handler:
+    - Create Expense record: amount = fixedExpense.amount, category = fixedExpense.category,
+      merchant = fixedExpense.name, source = .wallet, date = today, note = "Pago automático desde notificación"
+    - Mark fixedExpense.paidThisMonth = true
+    - Show local confirmation banner (UNNotificationContent, no app open needed)
+
+  SNOOZE action handler:
+    - Schedule new one-time notification for tomorrow same time
+    - No Expense record created
+
+  RESCHEDULE LOGIC:
+    - All recurring notifications rescheduled on:
+      1. App foreground after midnight of a new month
+      2. User edits a FixedExpense (delete old, create new trigger)
+    
+  ADD to FixedExpense model:
+    var paidThisMonth: Bool = false
+    var lastPaidDate: Date?
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+USER STORY 4 — AppState wiring (UI ↔ Logic)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+As a developer, the app needs a central state object that all views read from 
+so the UI reflects real data at all times.
+
+AppState (@Observable singleton):
+  var monthlyIncome: Double           // from UserDefaults
+  var payDay: Int                     // from UserDefaults
+  var suggestedVariableBudget: Double // computed, cached in UserDefaults
+  var currentMonthExpenses: Double    // live sum from SwiftData query
+  var currentMonthSaved: Double       // live sum of Contribution this month
+  var activeGoals: [SavingsGoal]      // live query
+  var currentMonthSnapshot: MonthlySnapshot?
+  var previousMonthSnapshot: MonthlySnapshot?
+  
+  func recalculateSuggestedBudget()   // runs after any fixedExpense or goal change
+  func scheduleAllNotifications()     // runs after onboarding + any fixedExpense edit
+  func snapshotPreviousMonthIfNeeded() // runs on app foreground
+
+WIRING CHECKLIST (agent must verify each):
+  ☐ GoalsView reads from AppState.activeGoals (live, not static)
+  ☐ GoalDetailView slider updates monthlyContribution and triggers recalculateSuggestedBudget()
+  ☐ ExpensesView reads live SwiftData query filtered by current month
+  ☐ AddExpenseSheet inserts to SwiftData + triggers currentMonthExpenses update
+  ☐ Dashboard Hero Card reads AppState.currentMonthExpenses, .monthlyIncome, fixedExpenses sum
+  ☐ Stats card reads currentMonthSnapshot vs previousMonthSnapshot
+  ☐ Budget progress bar = currentMonthExpenses / suggestedVariableBudget
+  ☐ AddContributionSheet updates goal.savedAmount + creates Contribution record + updates currentMonthSaved
+  ☐ FixedExpense edit → rescheduleAllNotifications()
+  ☐ Onboarding completion → AppState populated + notifications scheduled + transition to MainTabView

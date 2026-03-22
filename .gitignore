@@ -5,14 +5,8 @@
 .gemini/
 
 # ── Spec-Kit generated scratch documents (kept tracked below) ──────
-# /constitution.md  → ignored (internal guardrails — tracked copy lives in specs/)
-# /spec.md          → ignored (intermediate output — tracked copy lives in specs/)
-# /plan.md          → ignored (intermediate output — tracked copy lives in specs/)
-# /tasks.md         → ignored (intermediate output — tracked copy lives in specs/)
-/constitution.md
-/spec.md
-/plan.md
-/tasks.md
+*.md
+!README.md
 
 # ── macOS ──────────────────────────────────────────────────────────
 .DS_Store
@@ -48,3 +42,5 @@ build/
 # ── Environment and secrets ────────────────────────────────────────
 *.env
 .env.*
+
+# ── Documentation ──────────────────────────────────────────────────

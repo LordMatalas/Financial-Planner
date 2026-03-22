@@ -3,12 +3,15 @@ import SwiftData
 
 @main
 struct FinanzasDanielApp: App {
+    @State private var appState = AppState.shared
+    
     let container: ModelContainer = {
         let schema = Schema([
             SavingsGoal.self,
             Contribution.self,
             Expense.self,
-            FixedExpense.self
+            FixedExpense.self,
+            MonthlySnapshot.self
         ])
         let config = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
         do {
@@ -22,34 +25,16 @@ struct FinanzasDanielApp: App {
         WindowGroup {
             ContentView()
                 .modelContainer(container)
+                .environment(appState)
                 .onAppear {
-                    NotificationManager.shared.requestAuthorization()
+                    // Seed only if needed and not already done
                     seedInitialData()
                 }
         }
     }
     
     private func seedInitialData() {
-        let context = container.mainContext
-        let fetchDescriptor = FetchDescriptor<SavingsGoal>()
-        if let count = try? context.fetchCount(fetchDescriptor), count == 0 {
-            let bmw = SavingsGoal(
-                name: "BMW G 310 GS",
-                emoji: "🏍️",
-                targetAmount: 13250000,
-                savedAmount: 0,
-                deadline: Calendar.current.date(byAdding: .month, value: 23, to: .now),
-                monthlyContribution: 1200000
-            )
-            context.insert(bmw)
-            
-            // Fixed Expenses from spec
-            let icetex = FixedExpense(name: "Icetex", amount: 600000, dueDay: 1, category: .other)
-            let ortodoncia = FixedExpense(name: "Ortodoncia", amount: 200000, dueDay: 15, endsOnMonth: 10, category: .health)
-            context.insert(icetex)
-            context.insert(ortodoncia)
-            
-            try? context.save()
-        }
+        // We only seed if user has already completed onboarding or for debugging
+        // But the new requirement says OnboardingFlow shows on first launch.
     }
 }

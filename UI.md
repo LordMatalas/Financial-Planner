@@ -2,7 +2,7 @@
 
 ---
 
-## DESIGN SYSTEM (léelo todo antes de generar)
+## DESIGN SYSTEM
 
 **App:** FinanzasDaniel — tracker de metas de ahorro + gastos hormiga. iOS nativa, SwiftUI.  
 **Vibe:** Fintech startup premium. Oscuro, sofisticado, motivador. Como si Revolut y Copilot Money tuvieran un hijo colombiano.  

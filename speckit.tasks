@@ -1,0 +1,38 @@
+# Tasks for FinanzasDaniel v0.2: Functional Onboarding
+
+## Phase 1: Core Logic Layer & Persistence
+- [ ] Create `AppState.swift` as an `@Observable` singleton following `speckit.plan`.
+- [ ] Create `BudgetCalculator.swift` with pure functions for budget estimation.
+- [ ] Implement `MonthlySnapshot` SwiftData model in `Models/MonthlySnapshot.swift`.
+- [ ] Update `FixedExpense` model to include `paidThisMonth` and `lastPaidDate`.
+- [ ] Implement `MonthlySnapshot+AutoCreate.swift` for previous month tracking.
+
+## Phase 2: Notification Infrastructure
+- [ ] Create `NotificationScheduler.swift` to handle `UNUserNotificationCenter` logic.
+- [ ] Setup `UNNotificationCategory` for "FIXED_EXPENSE_REMINDER".
+- [ ] Implement action handlers for "PAID" and "SNOOZE".
+- [ ] Add logic to reschedule notifications on month change or expense edits.
+
+## Phase 3: Generic UI Components
+- [ ] Create `HeroNumberInput.swift` for Step 2 of onboarding.
+- [ ] Create `FixedExpenseRow.swift` for inline editing in onboarding.
+- [ ] Create `GoalEditorCard.swift` with `EmojiPickerGrid.swift`.
+- [ ] Create `DeltaChip.swift` for treasury percentage variance visualization.
+- [ ] Create `BudgetBreakdownCard.swift` for the final onboarding step.
+
+## Phase 4: Onboarding Flow implementation
+- [ ] Create `OnboardingFlow.swift` as a state machine managing sub-views.
+- [ ] Implement `OnboardingWelcomeView.swift` with spring morphing animation.
+- [ ] Implement `OnboardingIncomeView.swift`, `OnboardingFixedView.swift`, and `OnboardingGoalsView.swift`.
+- [ ] Implement `OnboardingBudgetView.swift` with notification opt-in.
+- [ ] Wire completion to `AppState` and navigation to `MainTabView`.
+
+## Phase 5: Dashboard v0.2 Integration
+- [ ] Create `StatsComparisonCard.swift` with Canvas-based horizontal bar chart.
+- [ ] Wire Dashboard Hero Card and Stats Card to `AppState` metrics.
+- [ ] Verify wiring checklist from User Story 4 in `speckit.specify`.
+
+## Phase 6: Final Polish & Validation
+- [ ] Test transition from onboarding to main app.
+- [ ] Verify notification scheduling and action handling.
+- [ ] Ensure `DesignSystem` compliance across new components.

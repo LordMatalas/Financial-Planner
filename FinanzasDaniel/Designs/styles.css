@@ -1,0 +1,192 @@
+:root {
+  --bg-base: #07070F;
+  --bg-surface: #10101C;
+  --bg-elevated: #18182A;
+  --accent-mint: #0AFFA0;
+  --accent-violet: #7C6FFF;
+  --accent-rose: #FF4D72;
+  --accent-amber: #FFB930;
+  --text-primary: #F0F0FF;
+  --text-secondary: #8080A0;
+  --text-tertiary: #404058;
+  --border-subtle: rgba(255, 255, 255, 0.06);
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: var(--text-primary);
+  background-color: #1a1a1a;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 80px;
+  padding: 80px;
+}
+
+.screen {
+  width: 390px;
+  height: 844px;
+  background-color: var(--bg-base);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 40px 100px rgba(0,0,0,0.8);
+}
+
+.phone-frame {
+  border-radius: 54px;
+  outline: 10px solid #222;
+}
+
+.bg-base { background-color: var(--bg-base); }
+.bg-surface { background-color: var(--bg-surface); }
+.bg-elevated { background-color: var(--bg-elevated); }
+
+.text-primary { color: var(--text-primary); }
+.text-secondary { color: var(--text-secondary); }
+.text-tertiary { color: var(--text-tertiary); }
+.text-mint { color: var(--accent-mint); }
+.text-rose { color: var(--accent-rose); }
+.text-amber { color: var(--accent-amber); }
+.text-violet { color: var(--accent-violet); }
+
+.font-38 { font-size: 38px; }
+.font-26 { font-size: 26px; }
+.font-18 { font-size: 18px; }
+.font-15 { font-size: 15px; }
+.font-14 { font-size: 14px; }
+.font-13 { font-size: 13px; }
+.font-12 { font-size: 12px; }
+.font-11 { font-size: 11px; }
+
+.fw-700 { font-weight: 700; }
+.fw-600 { font-weight: 600; }
+.fw-500 { font-weight: 500; }
+
+.mono { font-family: ui-monospace, SFMono-Regular, SF Pro Mono, Menlo, Courier, monospace; }
+.all-caps { text-transform: uppercase; }
+.tracking-1 { letter-spacing: 0.1em; }
+.opacity-25 { opacity: 0.25; }
+
+.p-20 { padding: 20px; }
+.p-24 { padding: 24px; }
+.mb-4 { margin-bottom: 4px; }
+.mb-8 { margin-bottom: 8px; }
+.mb-12 { margin-bottom: 12px; }
+.mb-16 { margin-bottom: 16px; }
+.mb-24 { margin-bottom: 24px; }
+.mb-32 { margin-bottom: 32px; }
+.mt-4 { margin-top: 4px; }
+.mt-8 { margin-top: 8px; }
+.mt-16 { margin-top: 16px; }
+.mt-20 { margin-top: 20px; }
+.ml-12 { margin-left: 12px; }
+.pb-0 { padding-bottom: 0; }
+.pt-16 { padding-top: 16px; }
+.pt-8 { padding-top: 8px; }
+.pb-8 { padding-bottom: 8px; }
+
+.flex { display: flex; }
+.flex-between { display: flex; justify-content: space-between; align-items: center; }
+.flex-1 { flex: 1; }
+.justify-center { justify-content: center; }
+.align-center { align-items: center; }
+.gap-4 { gap: 4px; }
+.gap-12 { gap: 12px; }
+.gap-16 { gap: 16px; }
+.gap-40 { gap: 40px; }
+
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; }
+
+.block { display: block; }
+
+.status-bar {
+  height: 44px;
+  padding: 0 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.status-bar .icons {
+  display: flex;
+  gap: 6px;
+  font-size: 12px;
+}
+
+.card {
+  border-radius: 22px;
+  border: 0.5px solid var(--border-subtle);
+}
+
+.divider {
+  height: 0.5px;
+  background-color: var(--border-subtle);
+  width: 100%;
+}
+
+.chip {
+  padding: 4px 10px;
+  border-radius: 99px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.chip-mint { background: rgba(10, 255, 160, 0.1); color: var(--accent-mint); }
+.chip-rose { background: rgba(255, 77, 114, 0.1); color: var(--accent-rose); }
+
+.bar-current, .bar-prev {
+  height: 8px;
+  border-radius: 99px;
+}
+
+.bars { position: relative; height: 12px; }
+.bar-prev { position: absolute; left: 0; top: 0; }
+.bar-current { position: absolute; left: 0; top: 0; }
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.tab-bar {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 82px;
+  background: rgba(7, 7, 15, 0.8);
+  backdrop-filter: blur(20px);
+  display: flex;
+  justify-content: space-around;
+  padding-top: 12px;
+  border-top: 0.5px solid var(--border-subtle);
+}
+
+.tab-bar i { font-size: 22px; }
+
+.day-picker {
+  display: flex;
+  gap: 14px;
+}
+
+.day {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+
+.day.active {
+  background: var(--accent-mint);
+  color: #07070F;
+  border-radius: 50%;
+  font-weight: 700;
+}
+
+.border-bottom {
+  border-bottom: 0.5px solid var(--border-subtle);
+}

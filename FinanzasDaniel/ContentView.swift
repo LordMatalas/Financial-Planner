@@ -5,11 +5,24 @@ enum AppTab {
 }
 
 struct ContentView: View {
+    @Environment(AppState.self) private var appState
     @State private var selectedTab: AppTab = .dashboard
     
     var body: some View {
+        Group {
+            if appState.onboardingComplete {
+                mainView
+            } else {
+                OnboardingFlow()
+                    .transition(.opacity)
+            }
+        }
+        .animation(DesignSystem.Transitions.spring, value: appState.onboardingComplete)
+    }
+    
+    var mainView: some View {
         ZStack(alignment: .bottom) {
-            Color.bgBase.ignoresSafeArea()
+            DesignSystem.Colors.background.ignoresSafeArea()
             
             // Content
             Group {
@@ -55,18 +68,14 @@ struct TabBarButton: View {
     
     var body: some View {
         Button {
-            withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+            withAnimation(DesignSystem.Transitions.spring) {
                 selectedTab = tab
             }
         } label: {
             Image(systemName: icon)
                 .font(.system(size: 24, weight: .semibold))
-                .foregroundColor(selectedTab == tab ? .accentMint : .textTertiary)
+                .foregroundColor(selectedTab == tab ? DesignSystem.Colors.primary : DesignSystem.Colors.textTertiary)
                 .frame(width: 50, height: 50)
         }
     }
-}
-
-#Preview {
-    ContentView()
 }

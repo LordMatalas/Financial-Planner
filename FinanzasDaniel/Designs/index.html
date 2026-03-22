@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinanzasDaniel · Dashboard Update</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-base">
+    <div class="screen phone-frame" id="db-update">
+        <div class="status-bar">
+            <span>9:41</span>
+            <div class="icons">
+                <i class="fa-solid fa-signal"></i>
+                <i class="fa-solid fa-wifi"></i>
+                <i class="fa-solid fa-battery-full"></i>
+            </div>
+        </div>
+        <header class="p-24 pb-0">
+            <h1 class="text-primary font-26 fw-600 mb-4">Hola, Daniel 👋</h1>
+            <div class="flex-between">
+                <span class="text-secondary font-14">Marzo 2026</span>
+                <i class="fa-solid fa-gear text-secondary"></i>
+            </div>
+        </header>
+        <section class="p-20 pt-16">
+            <div class="card bg-surface p-20 mb-24">
+                <span class="text-secondary font-11 all-caps tracking-1">Saldo libre este mes</span>
+                <div class="font-38 fw-700 text-mint mono mt-4">$847.000</div>
+                <div class="divider mt-16 mb-16"></div>
+                <div class="flex-between">
+                    <div class="metric">
+                        <span class="font-11 text-secondary">Ingresos</span>
+                        <div class="font-15 fw-600 text-mint mono">$2.450.000</div>
+                    </div>
+                    <div class="metric">
+                        <span class="font-11 text-secondary">Fijos</span>
+                        <div class="font-15 fw-600 text-rose mono">$900.000</div>
+                    </div>
+                    <div class="metric">
+                        <span class="font-11 text-secondary">Variables</span>
+                        <div class="font-15 fw-600 text-amber mono">$303.000</div>
+                    </div>
+                </div>
+            </div>
+            <div class="card bg-surface p-20 mb-24">
+                <div class="flex-between mb-16">
+                    <span class="text-secondary font-12 all-caps tracking-1">vs. mes anterior</span>
+                    <span class="text-tertiary font-12">Feb → Mar</span>
+                </div>
+                <div class="flex-between mb-24">
+                    <div class="col-delta">
+                        <span class="font-11 text-tertiary mb-4 block">Gastos</span>
+                        <div class="font-15 fw-600 text-primary mono mb-4">$303.000</div>
+                        <div class="chip chip-mint">↓12%</div>
+                    </div>
+                    <div class="col-delta">
+                        <span class="font-11 text-tertiary mb-4 block">Ahorro</span>
+                        <div class="font-15 fw-600 text-primary mono mb-4">$600.000</div>
+                        <div class="chip chip-mint">↑8%</div>
+                    </div>
+                    <div class="col-delta">
+                        <span class="font-11 text-tertiary mb-4 block">Saldo libre</span>
+                        <div class="font-15 fw-600 text-primary mono mb-4">$847.000</div>
+                        <div class="chip chip-mint">↑5%</div>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <h4 class="font-12 text-tertiary mb-16">Gastos por categoría</h4>
+                    <div class="cat-row mb-12">
+                        <div class="flex-between mb-4">
+                            <span class="font-11 text-tertiary">Comida</span>
+                            <span class="font-11 text-secondary mono">$185k</span>
+                        </div>
+                        <div class="bars">
+                            <div class="bar bar-prev bg-violet opacity-25" style="width: 55%;"></div>
+                            <div class="bar bar-current bg-violet" style="width: 70%;"></div>
+                        </div>
+                    </div>
+                    <div class="cat-row mb-12">
+                        <div class="flex-between mb-4">
+                            <span class="font-11 text-tertiary">Transporte</span>
+                            <span class="font-11 text-secondary mono">$62k</span>
+                        </div>
+                        <div class="bars">
+                            <div class="bar bar-prev bg-violet opacity-25" style="width: 20%;"></div>
+                            <div class="bar bar-current bg-violet" style="width: 25%;"></div>
+                        </div>
+                    </div>
+                    <div class="cat-row mb-12">
+                        <div class="flex-between mb-4">
+                            <span class="font-11 text-tertiary">Ocio</span>
+                            <span class="font-11 text-secondary mono">$32k</span>
+                        </div>
+                        <div class="bars">
+                            <div class="bar bar-prev bg-rose opacity-25" style="width: 40%;"></div>
+                            <div class="bar bar-current bg-rose" style="width: 15%;"></div>
+                        </div>
+                    </div>
+                    <div class="cat-row mb-12">
+                        <div class="flex-between mb-4">
+                            <span class="font-11 text-tertiary">Otros</span>
+                            <span class="font-11 text-secondary mono">$24k</span>
+                        </div>
+                        <div class="bars">
+                            <div class="bar bar-prev bg-violet opacity-25" style="width: 14%;"></div>
+                            <div class="bar bar-current bg-violet" style="width: 10%;"></div>
+                        </div>
+                    </div>
+                    <div class="legend flex justify-center mt-20 gap-16">
+                        <div class="flex align-center gap-4">
+                            <div class="dot bg-violet"></div>
+                            <span class="font-11 text-tertiary">Marzo</span>
+                        </div>
+                        <div class="flex align-center gap-4">
+                            <div class="dot bg-violet opacity-25"></div>
+                            <span class="font-11 text-tertiary">Febrero</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="tab-bar">
+            <i class="fa-solid fa-bullseye text-tertiary"></i>
+            <i class="fa-solid fa-chart-line text-mint"></i>
+            <i class="fa-solid fa-wallet text-tertiary"></i>
+            <div class="safe-area"></div>
+        </div>
+    </div>
+    <div id="component-panel" style="width: 800px; padding: 40px; background: #07070F; margin-top: 100px;">
+        <h2 class="text-primary mb-32">Component Library · FinanzasDaniel</h2>
+        <div class="grid-2 gap-40">
+            <div>
+                <h3 class="text-tertiary font-12 all-caps mb-16">DeltaChip</h3>
+                <div class="flex gap-12">
+                    <div class="chip chip-mint">↑8.5%</div>
+                    <div class="chip chip-rose">↓12%</div>
+                </div>
+                <h3 class="text-tertiary font-12 all-caps mt-32 mb-16">DayPickerRow</h3>
+                <div class="day-picker">
+                    <span class="day text-tertiary">17</span>
+                    <span class="day text-tertiary">18</span>
+                    <span class="day text-tertiary">19</span>
+                    <span class="day active">20</span>
+                    <span class="day text-tertiary">21</span>
+                    <span class="day text-tertiary">22</span>
+                    <span class="day text-tertiary">23</span>
+                </div>
+            </div>
+            <div class="card bg-surface p-20">
+                <h3 class="text-tertiary font-12 all-caps mb-16">BudgetBreakdownCard</h3>
+                <div class="flex-between mb-8">
+                    <span class="text-primary font-14">Ingreso</span>
+                    <span class="text-primary font-14 mono">$2.450.000</span>
+                </div>
+                <div class="flex-between mb-8">
+                    <span class="text-primary font-14">Fijos</span>
+                    <span class="text-rose font-14 mono">−$900.000</span>
+                </div>
+                <div class="divider mt-8 mb-8"></div>
+                <div class="flex-between">
+                    <span class="text-primary fw-600">Libre</span>
+                    <span class="text-mint font-18 fw-700 mono">$1.550.000</span>
+                </div>
+            </div>
+        </div>
+        <div class="mt-40">
+            <h3 class="text-tertiary font-12 all-caps mb-16">FixedExpenseRow</h3>
+            <div class="card bg-surface p-12">
+                <div class="flex align-center gap-12 pt-8 pb-8 border-bottom">
+                    <span class="font-20">📚</span>
+                    <span class="text-primary font-14 flex-1">Icetex</span>
+                    <span class="text-primary font-14 mono">$600.000</span>
+                    <span class="text-tertiary font-12">Día 5</span>
+                    <i class="fa-solid fa-xmark text-tertiary font-12 ml-12"></i>
+                </div>
+                <div class="flex align-center gap-12 pt-8 pb-8">
+                    <span class="font-20">💳</span>
+                    <span class="text-primary font-14 flex-1">TC (cuota)</span>
+                    <span class="text-primary font-14 mono">$300.000</span>
+                    <span class="text-tertiary font-12">Día 10</span>
+                    <i class="fa-solid fa-xmark text-tertiary font-12 ml-12"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

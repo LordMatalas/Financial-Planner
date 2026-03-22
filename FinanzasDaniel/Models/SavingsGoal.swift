@@ -11,12 +11,12 @@ class SavingsGoal {
     var deadline: Date?
     var monthlyContribution: Double
     var isActive: Bool
-    var createdAt: Date
+    var createdAt: Date?
     
     @Relationship(deleteRule: .cascade, inverse: \Contribution.goal)
     var contributions: [Contribution] = []
 
-    init(id: UUID = UUID(), name: String, emoji: String, targetAmount: Double, savedAmount: Double = 0, deadline: Date? = nil, monthlyContribution: Double, isActive: Bool = true, createdAt: Date = .now) {
+    init(id: UUID = UUID(), name: String, emoji: String, targetAmount: Double, savedAmount: Double = 0, deadline: Date? = nil, monthlyContribution: Double, isActive: Bool = true, createdAt: Date? = .now) {
         self.id = id
         self.name = name
         self.emoji = emoji

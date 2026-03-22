@@ -1,0 +1,75 @@
+Tech stack and architecture for FinanzasDaniel v0.2 functional layer:
+
+PERSISTENCE SPLIT
+- UserDefaults (AppStorageKeys enum): monthlyIncome, payDay, onboardingComplete, suggestedVariableBudget, notificationsGranted
+- SwiftData: SavingsGoal, Contribution, Expense, FixedExpense, MonthlySnapshot
+- No Core Data. No third-party persistence.
+
+NEW FILES TO CREATE (do not modify existing working UI files without instruction):
+  AppState.swift                    — @Observable singleton
+  NotificationScheduler.swift       — UNUserNotificationCenter wrapper + action handlers
+  BudgetCalculator.swift            — Pure functions, zero side effects, fully testable
+  MonthlySnapshot+AutoCreate.swift  — Logic for snapshot creation
+  
+  Onboarding/
+    OnboardingFlow.swift            — Manages step state machine (enum Step)
+    OnboardingWelcomeView.swift     — Step 0: splash
+    OnboardingIncomeView.swift      — Step 1: income + pay day
+    OnboardingFixedView.swift       — Step 2: fixed expenses
+    OnboardingGoalsView.swift       — Step 3: goals
+    OnboardingBudgetView.swift      — Step 4: budget reveal + notifications
+    OnboardingPreset.swift          — Preset chips data (Icetex, Netflix, etc.)
+  
+  Components/
+    HeroNumberInput.swift           — Large SF Mono input with $ prefix
+    FixedExpenseRow.swift           — Inline editable row (name, amount, day)
+    GoalEditorCard.swift            — Inline goal creator with emoji picker
+    EmojiPickerGrid.swift           — 40-emoji grid, 8 columns
+    StatsComparisonCard.swift       — Month vs month card with Canvas bar chart
+    BudgetBreakdownCard.swift       — Read-only breakdown (onboarding step 4)
+    NotificationPermissionCard.swift
+    DeltaChip.swift                 — "↑12%" / "↓8%" chip with semantic color
+
+ENTRY POINT LOGIC (FinanzasDanielApp.swift):
+  On launch: check UserDefaults "onboarding_complete"
+  false → OnboardingFlow (fullscreen, no tab bar)
+  true  → MainTabView
+  Use @AppStorage("onboarding_complete") for reactive binding.
+
+STEP STATE MACHINE (OnboardingFlow):
+  enum OnboardingStep: Int, CaseIterable {
+    case welcome, income, fixed, goals, budget
+  }
+  @State var currentStep: OnboardingStep = .welcome
+  Transition: .asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading))
+  Progress: (currentStep.rawValue + 1) / OnboardingStep.allCases.count
+
+NOTIFICATION CATEGORIES:
+  UNNotificationCategory identifier: "FIXED_EXPENSE_REMINDER"
+  Actions: "PAID" (title: "Sí, ya pagué"), "SNOOZE" (title: "Recordar mañana")
+  Register category on app launch (before permission request).
+
+SWIFTDATA QUERY PATTERNS:
+  // Current month expenses — live
+  @Query(filter: #Predicate<Expense> { expense in
+    expense.date >= startOfMonth && expense.date <= endOfMonth
+  }, sort: \.date, order: .reverse) var currentExpenses: [Expense]
+  
+  // Use Calendar.current for startOfMonth/endOfMonth computation
+  // Wrap in ExpensesViewModel for testability
+
+BUDGET CALCULATOR (pure, no side effects):
+  struct BudgetCalculator {
+    static func suggested(income: Double, fixed: [FixedExpense], goals: [SavingsGoal]) -> Double {
+      let fixedTotal = fixed.filter(\.isActive).reduce(0) { $0 + $1.amount }
+      let goalsTotal = goals.filter(\.isActive).reduce(0) { $0 + $1.monthlyContribution }
+      let buffer = max(income * 0.10, 50_000)
+      return max(income - fixedTotal - goalsTotal - buffer, 0)
+    }
+  }
+
+DO NOT:
+- Do not use async/await for UserDefaults reads (synchronous only)
+- Do not schedule notifications in a View — only in NotificationScheduler
+- Do not put business logic in SwiftUI body or computed vars on views
+- Do not recreate ModelContainer in multiple places — one instance in App

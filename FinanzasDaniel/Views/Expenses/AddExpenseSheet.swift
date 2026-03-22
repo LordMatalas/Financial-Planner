@@ -1,16 +1,15 @@
 import SwiftUI
+import SwiftData
 
 struct AddExpenseSheet: View {
+    @Environment(\.modelContext) private var modelContext
+    @Environment(\.dismiss) private var dismiss
+    
     @State private var amount: String = ""
-    @State private var selectedCategory: String = "🍔 Comida"
+    @State private var selectedCategory: ExpenseCategory = .food
     @State private var merchant: String = ""
     @State private var note: String = ""
     @State private var date: Date = Date()
-    
-    let categories = [
-        "🍔 Comida", "🚌 Trans.", "🎮 Ocio",
-        "💊 Salud", "👟 Ropa", "💸 Otro"
-    ]
     
     // Grid layout for 3 columns
     let columns = [
@@ -19,17 +18,15 @@ struct AddExpenseSheet: View {
         GridItem(.flexible())
     ]
     
-    @Environment(\.dismiss) var dismiss
-    
     var body: some View {
         ZStack(alignment: .bottom) {
-            Color.bgBase.ignoresSafeArea()
+            DesignSystem.Colors.background.ignoresSafeArea()
             
             ScrollView {
                 VStack(spacing: 32) {
-                    // Drag indicator simulation (handled by pure sheet or manually here)
+                    // Drag indicator simulation
                     Capsule()
-                        .fill(Color.textTertiary)
+                        .fill(DesignSystem.Colors.textTertiary)
                         .frame(width: 40, height: 5)
                         .padding(.top, 12)
                     
@@ -51,60 +48,80 @@ struct AddExpenseSheet: View {
             // CTA
             VStack {
                 Spacer()
-                PrimaryButton(title: "Guardar gasto", action: { dismiss() }, useViolet: true)
+                PrimaryButton(title: "Guardar gasto", action: saveExpense, useViolet: true)
                     .padding(.horizontal, 20)
                     .padding(.bottom, 34)
                     .padding(.top, 16)
-                    .background(Color.bgBase.opacity(0.9))
+                    .background(DesignSystem.Colors.background.opacity(0.9))
             }
         }
         .preferredColorScheme(.dark)
     }
     
+    private func saveExpense() {
+        guard let amountValue = Double(amount) else { return }
+        
+        ExpenseManager.shared.addExpense(
+            amount: amountValue,
+            merchant: merchant.isEmpty ? "Sin nombre" : merchant,
+            category: selectedCategory,
+            date: date,
+            note: note,
+            context: modelContext
+        )
+        
+        dismiss()
+    }
+    
     private var headerSection: some View {
         VStack(spacing: 4) {
             Text("Nuevo gasto")
-                .font(.display(size: 22, weight: .semibold))
-                .foregroundColor(.textPrimary)
+                .font(.system(size: 22, weight: .semibold))
+                .foregroundColor(DesignSystem.Colors.textPrimary)
             Text("Registra un gasto manual")
-                .font(.bodyText(size: 14))
-                .foregroundColor(.textSecondary)
+                .font(.system(size: 14))
+                .foregroundColor(DesignSystem.Colors.textSecondary)
         }
     }
     
     private var heroInput: some View {
         HStack(alignment: .firstTextBaseline, spacing: 4) {
             Text("$")
-                .font(.moneyNumber(size: 20))
-                .foregroundColor(.textSecondary)
+                .font(.system(size: 20))
+                .foregroundColor(DesignSystem.Colors.textSecondary)
             
             TextField("0", text: $amount)
-                .font(.moneyNumber(size: 52, weight: .bold))
-                .foregroundColor(.textPrimary)
+                .font(.system(size: 52, weight: .bold))
+                .foregroundColor(DesignSystem.Colors.textPrimary)
                 .keyboardType(.numberPad)
-                .tint(.accentMint) // blink cursor color
+                .tint(DesignSystem.Colors.primary) // blink cursor color
                 .fixedSize() // Let it grow from center
+                .currencyFormat()
         }
         .padding(.top, 16)
     }
     
     private var categoryGrid: some View {
         LazyVGrid(columns: columns, spacing: 12) {
-            ForEach(categories, id: \.self) { cat in
+            ForEach(ExpenseCategory.allCases, id: \.self) { cat in
                 Button(action: {
                     withAnimation { selectedCategory = cat }
                 }) {
-                    Text(cat)
-                        .font(.system(size: 14, weight: .medium))
-                        .foregroundColor(selectedCategory == cat ? .accentViolet : .textPrimary)
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 64)
-                        .background(selectedCategory == cat ? Color.accentViolet.opacity(0.15) : Color.bgElevated)
-                        .cornerRadius(14)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 14)
-                                .stroke(selectedCategory == cat ? Color.accentViolet : Color.clear, lineWidth: 1)
-                        )
+                    VStack(spacing: 4) {
+                        Text(cat.emoji)
+                            .font(.system(size: 24))
+                        Text(cat.rawValue)
+                            .font(.system(size: 11, weight: .medium))
+                    }
+                    .foregroundColor(selectedCategory == cat ? DesignSystem.Colors.secondary : DesignSystem.Colors.textPrimary)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 72)
+                    .background(selectedCategory == cat ? DesignSystem.Colors.secondary.opacity(0.15) : DesignSystem.Colors.surface)
+                    .cornerRadius(14)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 14)
+                            .stroke(selectedCategory == cat ? DesignSystem.Colors.secondary : Color.clear, lineWidth: 1)
+                    )
                 }
             }
         }
@@ -115,55 +132,47 @@ struct AddExpenseSheet: View {
         VStack(spacing: 16) {
             HStack {
                 Image(systemName: "storefront")
-                    .foregroundColor(.textTertiary)
+                    .foregroundColor(DesignSystem.Colors.textTertiary)
                     .frame(width: 24)
                 TextField("¿Dónde gastaste?", text: $merchant)
-                    .foregroundColor(.textPrimary)
-                    .font(.bodyText(size: 16))
+                    .foregroundColor(DesignSystem.Colors.textPrimary)
+                    .font(.system(size: 16))
                 
                 if !merchant.isEmpty {
                     Button(action: { merchant = "" }) {
                         Image(systemName: "xmark.circle.fill")
-                            .foregroundColor(.textTertiary)
+                            .foregroundColor(DesignSystem.Colors.textTertiary)
                     }
                 }
             }
             .padding()
-            .background(Color.bgElevated)
+            .background(DesignSystem.Colors.elevated)
             .cornerRadius(14)
-            .overlay(RoundedRectangle(cornerRadius: 14).stroke(Color.borderSubtle, lineWidth: 1))
+            .overlay(RoundedRectangle(cornerRadius: 14).stroke(DesignSystem.Colors.border, lineWidth: 1))
             
             HStack {
                 Image(systemName: "note.text")
-                    .foregroundColor(.textTertiary)
+                    .foregroundColor(DesignSystem.Colors.textTertiary)
                     .frame(width: 24)
                 TextField("Nota opcional...", text: $note)
-                    .foregroundColor(.textPrimary)
-                    .font(.bodyText(size: 16))
+                    .foregroundColor(DesignSystem.Colors.textPrimary)
+                    .font(.system(size: 16))
             }
             .padding()
-            .background(Color.bgElevated)
+            .background(DesignSystem.Colors.elevated)
             .cornerRadius(14)
-            .overlay(RoundedRectangle(cornerRadius: 14).stroke(Color.borderSubtle, lineWidth: 1))
+            .overlay(RoundedRectangle(cornerRadius: 14).stroke(DesignSystem.Colors.border, lineWidth: 1))
         }
         .padding(.horizontal, 20)
     }
     
     private var dateSection: some View {
-        HStack {
-            Text("📅 Hoy, 22 de marzo")
-                .font(.system(size: 16))
-                .foregroundColor(.textPrimary)
-            Spacer()
-            Image(systemName: "chevron.right")
-                .foregroundColor(.textTertiary)
-                .font(.system(size: 14))
-        }
-        .padding()
-        .background(Color.bgElevated)
-        .cornerRadius(14)
-        .overlay(RoundedRectangle(cornerRadius: 14).stroke(Color.borderSubtle, lineWidth: 1))
-        .padding(.horizontal, 20)
+        DatePicker("📅 Fecha", selection: $date, displayedComponents: [.date])
+            .padding()
+            .background(DesignSystem.Colors.elevated)
+            .cornerRadius(14)
+            .overlay(RoundedRectangle(cornerRadius: 14).stroke(DesignSystem.Colors.border, lineWidth: 1))
+            .padding(.horizontal, 20)
     }
 }
 

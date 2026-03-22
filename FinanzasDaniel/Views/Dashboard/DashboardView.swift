@@ -1,10 +1,20 @@
 import SwiftUI
+import SwiftData
 
 struct DashboardView: View {
+    @Environment(\.modelContext) private var modelContext
+    @Environment(AppState.self) private var appState
+    
+    @Query(sort: \Expense.date, order: .reverse) private var expenses: [Expense]
+    @Query private var goals: [SavingsGoal]
+    @Query private var fixedExpenses: [FixedExpense]
+    @Query(sort: \MonthlySnapshot.createdAt, order: .reverse) private var snapshots: [MonthlySnapshot]
+    
     var body: some View {
         ScrollView {
             VStack(spacing: 32) {
                 headerSection
+                statsSection
                 heroCard
                 goalsSection
                 expensesSection
@@ -13,52 +23,104 @@ struct DashboardView: View {
             }
             .padding(.top, 16)
         }
-        .background(Color.bgBase)
+        .background(DesignSystem.Colors.background)
     }
     
     private var headerSection: some View {
         HStack {
             VStack(alignment: .leading, spacing: 4) {
                 Text("Hola, Daniel 👋")
-                    .font(.display(size: 26))
-                    .foregroundColor(.textPrimary)
-                Text("Marzo 2026")
-                    .font(.bodyText(size: 14))
-                    .foregroundColor(.textSecondary)
+                    .font(.system(size: 26, weight: .bold))
+                    .foregroundColor(DesignSystem.Colors.textPrimary)
+                Text(Date.now.formatted(.dateTime.month(.wide).year()))
+                    .font(.system(size: 14))
+                    .foregroundColor(DesignSystem.Colors.textSecondary)
             }
             Spacer()
             Button(action: {}) {
                 Image(systemName: "gearshape.fill")
                     .font(.system(size: 22))
-                    .foregroundColor(.textSecondary)
+                    .foregroundColor(DesignSystem.Colors.textSecondary)
             }
         }
         .padding(.horizontal, 20)
     }
     
+    private var statsSection: some View {
+        VStack(spacing: 16) {
+            HStack(spacing: 16) {
+                if let current = snapshots.first {
+                    let prev = snapshots.count > 1 ? snapshots[1] : nil
+                    StatsComparisonCard(
+                        title: "Gastos vs. Anterior",
+                        current: current.totalExpenses,
+                        previous: prev?.totalExpenses ?? 0,
+                        isPositiveBetter: false
+                    )
+                    
+                    StatsComparisonCard(
+                        title: "Ahorro vs. Anterior",
+                        current: current.totalSaved,
+                        previous: prev?.totalSaved ?? 0,
+                        isPositiveBetter: true
+                    )
+                } else {
+                    // Empty state logic from speckit.specify
+                    AntigravityCard {
+                        Text("Aún no hay mes anterior para comparar. Vuelve en \(daysUntilNextMonth()) días.")
+                            .font(.system(size: 13, weight: .medium))
+                            .foregroundColor(DesignSystem.Colors.textTertiary)
+                            .padding()
+                    }
+                    .overlay(RoundedRectangle(cornerRadius: 18).stroke(style: StrokeStyle(lineWidth: 1, dash: [4])))
+                }
+            }
+            .padding(.horizontal, 20)
+        }
+    }
+    
+    private func daysUntilNextMonth() -> Int {
+        let calendar = Calendar.current
+        let nextMonth = calendar.date(byAdding: .month, value: 1, to: .now)!
+        let firstOfNext = calendar.date(from: calendar.dateComponents([.year, .month], from: nextMonth))!
+        return calendar.dateComponents([.day], from: .now, to: firstOfNext).day ?? 0
+    }
+    
     private var heroCard: some View {
-        AntigravityCard {
+        let totalIncome = appState.monthlyIncome
+        let fixedTotal = fixedExpenses.filter { $0.activeThisMonth }.reduce(0) { $0 + $1.amount }
+        let goalTotal = goals.reduce(0) { $0 + $1.monthlyContribution }
+        
+        let calendar = Calendar.current
+        let startOfMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: .now))!
+        let monthExpenses = expenses.filter { $0.date >= startOfMonth }
+        let variableSpent = monthExpenses.reduce(0) { $0 + $1.amount }
+        
+        let freeBalance = totalIncome - fixedTotal - goalTotal - variableSpent
+        
+        return AntigravityCard {
             VStack(alignment: .leading, spacing: 16) {
                 VStack(alignment: .leading, spacing: 4) {
                     Text("SALDO LIBRE ESTE MES")
                         .font(.system(size: 12, weight: .semibold))
                         .kerning(1.2)
-                        .foregroundColor(.textSecondary)
+                        .foregroundColor(DesignSystem.Colors.textSecondary)
                     
-                    Text("$847.000")
-                        .font(.moneyNumber(size: 38, weight: .bold))
-                        .foregroundColor(.accentMint)
+                    Text("$\(Int(freeBalance))")
+                        .font(.system(size: 38, weight: .bold))
+                        .foregroundColor(DesignSystem.Colors.primary)
+                        .currencyFormat()
                 }
                 
                 Divider()
-                    .background(Color.borderSubtle)
+                    .background(DesignSystem.Colors.border)
                 
                 HStack(spacing: 0) {
-                    metricCol(title: "Ingresos", amount: "$2.450.000", color: .accentMint)
+                    metricCol(title: "Ingresos", amount: "$\(Int(totalIncome))", color: DesignSystem.Colors.primary)
                     Spacer()
-                    metricCol(title: "Fijos", amount: "$1.300.000", color: .accentRose.opacity(0.6))
+                    metricCol(title: "Fijos", amount: "$\(Int(fixedTotal))", color: DesignSystem.Colors.destructive.opacity(0.6))
                     Spacer()
-                    metricCol(title: "Variables", amount: "$303.000", color: .accentAmber)
+                    metricCol(title: "Variables", amount: "$\(Int(variableSpent))", color: DesignSystem.Colors.warning)
                 }
             }
         }
@@ -69,10 +131,11 @@ struct DashboardView: View {
         VStack(alignment: .leading, spacing: 4) {
             Text(title)
                 .font(.system(size: 11))
-                .foregroundColor(.textSecondary)
+                .foregroundColor(DesignSystem.Colors.textSecondary)
             Text(amount)
-                .font(.moneyNumber(size: 15, weight: .semibold))
+                .font(.system(size: 15, weight: .semibold))
                 .foregroundColor(color)
+                .currencyFormat()
         }
     }
     
@@ -80,22 +143,22 @@ struct DashboardView: View {
         VStack(alignment: .leading, spacing: 16) {
             HStack {
                 Text("Tus metas")
-                    .font(.heading(size: 16))
-                    .foregroundColor(.textPrimary)
+                    .font(.system(size: 16, weight: .bold))
+                    .foregroundColor(DesignSystem.Colors.textPrimary)
                 Spacer()
                 Button(action: {}) {
                     Text("Ver todas →")
                         .font(.system(size: 13))
-                        .foregroundColor(.accentViolet)
+                        .foregroundColor(DesignSystem.Colors.secondary)
                 }
             }
             .padding(.horizontal, 20)
             
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 16) {
-                    miniGoalCard(emoji: "🏍️", name: "BMW G 310...", progress: 0.34, percentStr: "34%", subtitle: "Mes 14")
-                    miniGoalCard(emoji: "🛡️", name: "Fondo emerg.", progress: 0.26, percentStr: "26%", subtitle: "Mes 8")
-                    miniGoalCard(emoji: "✈️", name: "Viaje a Med.", progress: 0.67, percentStr: "67%", subtitle: "Mes 2")
+                    ForEach(goals) { goal in
+                        miniGoalCard(emoji: goal.emoji, name: goal.name, progress: goal.savedAmount / goal.targetAmount, percentStr: "\(Int((goal.savedAmount / goal.targetAmount) * 100))%", subtitle: "Aporte $\(Int(goal.monthlyContribution))")
+                    }
                 }
                 .padding(.horizontal, 20)
             }
@@ -109,38 +172,46 @@ struct DashboardView: View {
             
             Text(name)
                 .font(.system(size: 13, weight: .medium))
-                .foregroundColor(.textPrimary)
+                .foregroundColor(DesignSystem.Colors.textPrimary)
                 .lineLimit(1)
             
             ProgressBar(progress: progress)
             
             HStack {
                 Text(percentStr)
-                    .font(.moneyNumber(size: 13))
-                    .foregroundColor(.accentMint)
+                    .font(.system(size: 13))
+                    .foregroundColor(DesignSystem.Colors.primary)
+                    .currencyFormat()
                 Spacer()
                 Text(subtitle)
                     .font(.system(size: 11))
-                    .foregroundColor(.textTertiary)
+                    .foregroundColor(DesignSystem.Colors.textTertiary)
             }
         }
         .padding(16)
         .frame(width: 140, height: 160)
-        .background(Color.bgElevated)
+        .background(DesignSystem.Colors.surface)
         .cornerRadius(18)
     }
     
     private var expensesSection: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            Text("Hoy · $37.500 gastados")
+        let today = Calendar.current.startOfDay(for: .now)
+        let todayExpenses = expenses.filter { Calendar.current.isDate($0.date, inSameDayAs: today) }
+        let todayTotal = todayExpenses.reduce(0) { $0 + $1.amount }
+        
+        return VStack(alignment: .leading, spacing: 16) {
+            Text("Hoy · $\(Int(todayTotal)) gastados")
                 .font(.system(size: 14, weight: .medium))
-                .foregroundColor(.textPrimary)
+                .foregroundColor(DesignSystem.Colors.textPrimary)
                 .padding(.horizontal, 20)
             
             VStack(spacing: 0) {
-                expenseRow(emoji: "🍔", name: "Juan Valdez", amount: "$8.500", category: "Café · Chapinero", type: .wallet, color: .accentMint)
-                Divider().background(Color.borderSubtle).padding(.leading, 70)
-                expenseRow(emoji: "🚌", name: "SITP", amount: "$4.200", category: "Transporte", type: .wallet, color: .accentViolet)
+                ForEach(todayExpenses) { expense in
+                    expenseRow(emoji: expense.category.emoji, name: expense.merchant, amount: "$\(Int(expense.amount))", category: expense.category.rawValue, type: expense.source == .wallet ? .wallet : .manual, color: DesignSystem.Colors.primary)
+                    if expense != todayExpenses.last {
+                        Divider().background(DesignSystem.Colors.border).padding(.leading, 70)
+                    }
+                }
             }
             .padding(.horizontal, 20)
         }
@@ -157,18 +228,18 @@ struct DashboardView: View {
             
             VStack(alignment: .leading, spacing: 4) {
                 Text(name)
-                    .font(.bodyText(size: 15))
-                    .foregroundColor(.textPrimary)
+                    .font(.system(size: 15))
+                    .foregroundColor(DesignSystem.Colors.textPrimary)
                 HStack {
                     Text(category)
                         .font(.system(size: 13))
-                        .foregroundColor(.textSecondary)
+                        .foregroundColor(DesignSystem.Colors.textSecondary)
                     Spacer()
                     Image(systemName: type == .wallet ? "creditcard.fill" : "pencil")
                         .font(.system(size: 10))
-                        .foregroundColor(.textTertiary)
+                        .foregroundColor(DesignSystem.Colors.textTertiary)
                         .padding(4)
-                        .background(Color.bgElevated)
+                        .background(DesignSystem.Colors.elevated)
                         .clipShape(Capsule())
                 }
             }
@@ -176,8 +247,9 @@ struct DashboardView: View {
             Spacer()
             
             Text(amount)
-                .font(.moneyNumber(size: 15))
-                .foregroundColor(.textPrimary)
+                .font(.system(size: 15))
+                .foregroundColor(DesignSystem.Colors.textPrimary)
+                .currencyFormat()
         }
         .padding(.vertical, 12)
     }
