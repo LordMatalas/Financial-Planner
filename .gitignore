@@ -22,8 +22,11 @@ Icon?
 ._*
 
 # ── Xcode ──────────────────────────────────────────────────────────
-*.xcodeproj/xcuserdata/
-*.xcworkspace/xcuserdata/
+**/xcuserdata/
+**/.DS_Store
+**/*.xcuserstate
+*.xcodeproj/project.xcworkspace/
+!*.xcodeproj/project.xcworkspace/contents.xcworkspacedata
 *.xcworkspace/contents.xcworkspacedata
 DerivedData/
 *.moved-aside
