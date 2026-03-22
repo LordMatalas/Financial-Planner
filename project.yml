@@ -22,14 +22,27 @@ targets:
       - sdk: SwiftData.framework
       - sdk: AppIntents.framework
       - sdk: UserNotifications.framework
+  FinanzasDanielTests:
+    type: bundle.unit-test
+    platform: iOS
+    deploymentTarget: "17.0"
+    sources: [FinanzasDanielTests]
+    dependencies:
+      - target: FinanzasDaniel
+    settings:
+      SWIFT_VERSION: 5.9
+      GENERATE_INFOPLIST_FILE: YES
 schemes:
   FinanzasDaniel:
     build:
       targets:
         FinanzasDaniel: [run, test, profile, analyze, archive]
+        FinanzasDanielTests: [test]
     run:
       config: Debug
     test:
       config: Debug
+      targets:
+        - FinanzasDanielTests
     profile:
       config: Release
