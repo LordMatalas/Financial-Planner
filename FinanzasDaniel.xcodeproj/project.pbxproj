@@ -8,10 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		04C9C55070B0D872B5648F2C /* OnboardingFixedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8967A86ABDA37CECEF70318 /* OnboardingFixedView.swift */; };
+		08A5AD277DE85898A86291C8 /* DebtSheets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CED22D96AF3041EA7DF7CD2 /* DebtSheets.swift */; };
+		0A3F4EF179CF4AADDE9DAC3D /* Debt.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99EB4DB1376361C1536D847 /* Debt.swift */; };
 		10EC51A1AA1B25846A70BFAD /* Expense.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A27B41A3CB7EE67ECF93B2 /* Expense.swift */; };
 		1413364055A9C7A511091D67 /* GoalsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C2F66A4AC188550AF2512D1 /* GoalsViewModel.swift */; };
 		1CF22D2611CB2F7625657E9F /* MonthlySnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75906C3979683603ED29C9C6 /* MonthlySnapshot.swift */; };
 		1E6AA3EC07F5256DF5960BA1 /* ExpenseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A41A47219637C1F37BFCB8B /* ExpenseManager.swift */; };
+		22341FE1B5162F03822B056F /* DebtComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3FE6976F6FBE6433286376 /* DebtComponents.swift */; };
 		28AB129DD4DD6977686317B0 /* GoalDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1034FFA37AEDC553EFA3CB67 /* GoalDetailView.swift */; };
 		300CD0A4BA4C21BCD532C630 /* Color+Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB2E39C31CAF60727F1D1916 /* Color+Theme.swift */; };
 		32F70FC261FEF7CEF558870F /* AppIntentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01EF42D683306D2EF8A5F016 /* AppIntentTests.swift */; };
@@ -20,9 +23,11 @@
 		4020697BB47840D9A463CEF5 /* BudgetBreakdownCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D77582FF0781CEB04F8C42 /* BudgetBreakdownCard.swift */; };
 		417BD6E7A9C1573A5FA1DD8C /* RegisterWalletExpenseIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D2F6C094E44E717832FA9F /* RegisterWalletExpenseIntent.swift */; };
 		42C9E0BB310941DB427AE176 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E06B1D8EA0A42A372958EEC /* UserNotifications.framework */; };
+		442A74A8B96E3097FEA621C5 /* OnboardingDebtsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27EE9CFA75921D5839ED654 /* OnboardingDebtsView.swift */; };
 		44F00B3986DEC21A3A0596B3 /* GoalCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249E7A1195AD61B6521F11CA /* GoalCardView.swift */; };
 		4D08800D3181E01F7818DEBD /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B073914007F97B15CE4E47 /* AppState.swift */; };
 		518F287633F485B5305566F2 /* FixedExpense.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABC1ED330FE60C6C9F5D63F /* FixedExpense.swift */; };
+		53BE9DD948BFAE518EAD4E48 /* DebtDashboardIntegration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A7BBA30921366C8AF76998 /* DebtDashboardIntegration.swift */; };
 		5CC208DC4567D38A644C9996 /* OnboardingWelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807C843FF779BCAB5D470866 /* OnboardingWelcomeView.swift */; };
 		5E438AB2BEC2D2ED0B1534BA /* AppIntents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68607306721EF5BC5424348F /* AppIntents.framework */; };
 		629388E955C6376EA0EDA2CB /* StatsComparisonCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79DB32107A27A64053F7143D /* StatsComparisonCard.swift */; };
@@ -45,6 +50,7 @@
 		A53E0099DD0A88E1974543F7 /* ExpensesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB3870C0367780C09395B8B /* ExpensesViewModel.swift */; };
 		A74DA7289F2BB414ACE06FF3 /* Contribution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09138B25E6D6B8273FF364E6 /* Contribution.swift */; };
 		B03787F02D5BE32ACB3BF50B /* DeltaChip.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3171BDA097BA6EA6C7A4380 /* DeltaChip.swift */; };
+		B0C74635E7683059F864B4B8 /* DebtDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB25CAB29F3D382689D5CED /* DebtDetailView.swift */; };
 		BCDFBFC8F6DB3E0B8C66ED92 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 399C64EA1A5320E56FF9EC47 /* NotificationManager.swift */; };
 		BDFA0569293E8BD20FDDA329 /* GoalsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08CD6B5605DB78D1CDFBE4F6 /* GoalsView.swift */; };
 		BE371E49CA2808FF5525B666 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667F8B6B403ED06E69DAF1C3 /* Enums.swift */; };
@@ -52,6 +58,7 @@
 		C7C10B827CDB587CEC2C7F85 /* styles.css in Resources */ = {isa = PBXBuildFile; fileRef = AD997445D6AADE66FC309696 /* styles.css */; };
 		C7F77AF02ADC3B1D262F201E /* HeroNumberInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC940EDDABE2040CC74DB40 /* HeroNumberInput.swift */; };
 		DE4E159E0AF797076417D094 /* OnboardingBudgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 561062A7E592048A1F6868DB /* OnboardingBudgetView.swift */; };
+		E07005CFE1DCF72464E5364D /* DebtsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE55F53F06E25B9F7DFD0B3 /* DebtsView.swift */; };
 		E14BC8EA4D85983E96A11EF2 /* AddExpenseSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D58145E5BAAC1215C2F6DB /* AddExpenseSheet.swift */; };
 		E1D1C1447EDAF06B47C3D438 /* OnboardingFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98852D7D00505A829BB2059 /* OnboardingFlow.swift */; };
 		E6413FC8A9F0CE8FD8BF6995 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4086DAFD8397AEA6FC99F427 /* SwiftUI.framework */; };
@@ -82,12 +89,14 @@
 		08CD6B5605DB78D1CDFBE4F6 /* GoalsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalsView.swift; sourceTree = "<group>"; };
 		09138B25E6D6B8273FF364E6 /* Contribution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contribution.swift; sourceTree = "<group>"; };
 		0CB925DDC14EE22262A80030 /* AddContributionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContributionSheet.swift; sourceTree = "<group>"; };
+		0CED22D96AF3041EA7DF7CD2 /* DebtSheets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebtSheets.swift; sourceTree = "<group>"; };
 		1034FFA37AEDC553EFA3CB67 /* GoalDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalDetailView.swift; sourceTree = "<group>"; };
 		11B073914007F97B15CE4E47 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		18552AA797F16BE4658061D3 /* OnboardingGoalsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingGoalsView.swift; sourceTree = "<group>"; };
 		1A09667DEC6FFBE58687E428 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1BB3870C0367780C09395B8B /* ExpensesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesViewModel.swift; sourceTree = "<group>"; };
 		249E7A1195AD61B6521F11CA /* GoalCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalCardView.swift; sourceTree = "<group>"; };
+		24A7BBA30921366C8AF76998 /* DebtDashboardIntegration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebtDashboardIntegration.swift; sourceTree = "<group>"; };
 		2E06B1D8EA0A42A372958EEC /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		2F615E4A589BCEB38639FFDF /* ProgressRingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressRingView.swift; sourceTree = "<group>"; };
 		328450E01233324E93B8D755 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -100,6 +109,7 @@
 		4999F47E671906A1F2A9BEB6 /* SavingsGoal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingsGoal.swift; sourceTree = "<group>"; };
 		4A41A47219637C1F37BFCB8B /* ExpenseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseManager.swift; sourceTree = "<group>"; };
 		4A97687FD2A8B083E312FEED /* UIComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIComponents.swift; sourceTree = "<group>"; };
+		4BB25CAB29F3D382689D5CED /* DebtDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebtDetailView.swift; sourceTree = "<group>"; };
 		508FEF0EE4EB183FD4DAC34E /* FinancialShortcutsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinancialShortcutsProvider.swift; sourceTree = "<group>"; };
 		51BB0D10D9F68D4115EDC5BA /* SwiftData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftData.framework; path = System/Library/Frameworks/SwiftData.framework; sourceTree = SDKROOT; };
 		5327A2A9945888FDFB38D41E /* BudgetCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetCalculator.swift; sourceTree = "<group>"; };
@@ -117,12 +127,15 @@
 		93CC9379FC754328DD044F26 /* AddGoalSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGoalSheet.swift; sourceTree = "<group>"; };
 		97D2F6C094E44E717832FA9F /* RegisterWalletExpenseIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterWalletExpenseIntent.swift; sourceTree = "<group>"; };
 		9C2F66A4AC188550AF2512D1 /* GoalsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalsViewModel.swift; sourceTree = "<group>"; };
+		9F3FE6976F6FBE6433286376 /* DebtComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebtComponents.swift; sourceTree = "<group>"; };
 		A07F3466B397ADCF3189AD8C /* FinanzasDaniel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FinanzasDaniel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3171BDA097BA6EA6C7A4380 /* DeltaChip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeltaChip.swift; sourceTree = "<group>"; };
 		A8967A86ABDA37CECEF70318 /* OnboardingFixedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFixedView.swift; sourceTree = "<group>"; };
+		ABE55F53F06E25B9F7DFD0B3 /* DebtsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebtsView.swift; sourceTree = "<group>"; };
 		AD9772F7799162D6D3EFBACF /* FixedExpenseRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedExpenseRow.swift; sourceTree = "<group>"; };
 		AD997445D6AADE66FC309696 /* styles.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = styles.css; sourceTree = "<group>"; };
 		ADD64122F73449DE1741E6B7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		B27EE9CFA75921D5839ED654 /* OnboardingDebtsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingDebtsView.swift; sourceTree = "<group>"; };
 		B9D58145E5BAAC1215C2F6DB /* AddExpenseSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddExpenseSheet.swift; sourceTree = "<group>"; };
 		BABC1ED330FE60C6C9F5D63F /* FixedExpense.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedExpense.swift; sourceTree = "<group>"; };
 		BB2E39C31CAF60727F1D1916 /* Color+Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Theme.swift"; sourceTree = "<group>"; };
@@ -133,6 +146,7 @@
 		E98852D7D00505A829BB2059 /* OnboardingFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFlow.swift; sourceTree = "<group>"; };
 		F7A99A489F004019019878A5 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		F8B01C97A5350FDB8CB474C5 /* CurrencyFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyFormatter.swift; sourceTree = "<group>"; };
+		F99EB4DB1376361C1536D847 /* Debt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debt.swift; sourceTree = "<group>"; };
 		FCC940EDDABE2040CC74DB40 /* HeroNumberInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroNumberInput.swift; sourceTree = "<group>"; };
 		FDF6A3E78F97EED6CC8F9214 /* OnboardingIncomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingIncomeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -167,6 +181,17 @@
 				01EF42D683306D2EF8A5F016 /* AppIntentTests.swift */,
 			);
 			path = FinanzasDanielTests;
+			sourceTree = "<group>";
+		};
+		269A633F61FCD1CF7B49C643 /* Debts */ = {
+			isa = PBXGroup;
+			children = (
+				9F3FE6976F6FBE6433286376 /* DebtComponents.swift */,
+				24A7BBA30921366C8AF76998 /* DebtDashboardIntegration.swift */,
+				4BB25CAB29F3D382689D5CED /* DebtDetailView.swift */,
+				ABE55F53F06E25B9F7DFD0B3 /* DebtsView.swift */,
+			);
+			path = Debts;
 			sourceTree = "<group>";
 		};
 		30C7C68FFDB0C55CAB53F6E8 /* Utilities */ = {
@@ -249,10 +274,12 @@
 			children = (
 				CC47FA9C40FDED188EC860C4 /* Components */,
 				E0B05CA4349EE7906FE54950 /* Dashboard */,
+				269A633F61FCD1CF7B49C643 /* Debts */,
 				33A246A2F0F1BCE456577272 /* Expenses */,
 				39C564C922EC89F66154A3A8 /* Goals */,
 				E5900CA0750CC51F45E5EFFD /* Onboarding */,
 				B02BE0047AA1D5EA39CACF1A /* Settings */,
+				E38C6EB8CD8330703CF7D36C /* Sheets */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -261,6 +288,7 @@
 			isa = PBXGroup;
 			children = (
 				09138B25E6D6B8273FF364E6 /* Contribution.swift */,
+				F99EB4DB1376361C1536D847 /* Debt.swift */,
 				667F8B6B403ED06E69DAF1C3 /* Enums.swift */,
 				32A27B41A3CB7EE67ECF93B2 /* Expense.swift */,
 				BABC1ED330FE60C6C9F5D63F /* FixedExpense.swift */,
@@ -332,10 +360,19 @@
 			path = Dashboard;
 			sourceTree = "<group>";
 		};
+		E38C6EB8CD8330703CF7D36C /* Sheets */ = {
+			isa = PBXGroup;
+			children = (
+				0CED22D96AF3041EA7DF7CD2 /* DebtSheets.swift */,
+			);
+			path = Sheets;
+			sourceTree = "<group>";
+		};
 		E5900CA0750CC51F45E5EFFD /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
 				561062A7E592048A1F6868DB /* OnboardingBudgetView.swift */,
+				B27EE9CFA75921D5839ED654 /* OnboardingDebtsView.swift */,
 				A8967A86ABDA37CECEF70318 /* OnboardingFixedView.swift */,
 				E98852D7D00505A829BB2059 /* OnboardingFlow.swift */,
 				18552AA797F16BE4658061D3 /* OnboardingGoalsView.swift */,
@@ -445,6 +482,12 @@
 				391CB2170D01562254356042 /* CurrencyFormatter.swift in Sources */,
 				F4769C3C9E951F4860DA46D5 /* DashboardView.swift in Sources */,
 				88FEA2BA18058C97E49EABA4 /* DashboardViewModel.swift in Sources */,
+				0A3F4EF179CF4AADDE9DAC3D /* Debt.swift in Sources */,
+				22341FE1B5162F03822B056F /* DebtComponents.swift in Sources */,
+				53BE9DD948BFAE518EAD4E48 /* DebtDashboardIntegration.swift in Sources */,
+				B0C74635E7683059F864B4B8 /* DebtDetailView.swift in Sources */,
+				08A5AD277DE85898A86291C8 /* DebtSheets.swift in Sources */,
+				E07005CFE1DCF72464E5364D /* DebtsView.swift in Sources */,
 				B03787F02D5BE32ACB3BF50B /* DeltaChip.swift in Sources */,
 				6E2DCE70210104952EECA0F1 /* DesignSystem.swift in Sources */,
 				BE371E49CA2808FF5525B666 /* Enums.swift in Sources */,
@@ -467,6 +510,7 @@
 				1CF22D2611CB2F7625657E9F /* MonthlySnapshot.swift in Sources */,
 				BCDFBFC8F6DB3E0B8C66ED92 /* NotificationManager.swift in Sources */,
 				DE4E159E0AF797076417D094 /* OnboardingBudgetView.swift in Sources */,
+				442A74A8B96E3097FEA621C5 /* OnboardingDebtsView.swift in Sources */,
 				04C9C55070B0D872B5648F2C /* OnboardingFixedView.swift in Sources */,
 				E1D1C1447EDAF06B47C3D438 /* OnboardingFlow.swift in Sources */,
 				70AF32DC4D779A54FDF567AD /* OnboardingGoalsView.swift in Sources */,

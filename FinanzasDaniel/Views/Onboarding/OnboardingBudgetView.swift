@@ -3,13 +3,14 @@ import SwiftUI
 struct OnboardingBudgetView: View {
     let income: Double
     let fixed: Double
+    let debts: Double
     let goals: Double
     let buffer: Double
     @Binding var notificationsOptIn: Bool
     var onFinish: () -> Void
     
     var variable: Double {
-        max(income - fixed - goals - buffer, 0)
+        max(income - fixed - debts - goals - buffer, 0)
     }
     
     @State private var showingFormula = false
@@ -21,7 +22,7 @@ struct OnboardingBudgetView: View {
                     .font(.system(size: 28, weight: .bold))
                     .foregroundColor(DesignSystem.Colors.textPrimary)
                 
-                BudgetBreakdownCard(income: income, fixed: fixed, goals: goals, buffer: buffer, variable: variable)
+                BudgetBreakdownCard(income: income, fixed: fixed, debts: debts, goals: goals, buffer: buffer, variable: variable)
                 
                 HStack(alignment: .firstTextBaseline, spacing: 10) {
                     Image(systemName: "info.circle.fill")

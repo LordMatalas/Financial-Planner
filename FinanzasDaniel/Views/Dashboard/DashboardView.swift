@@ -16,6 +16,7 @@ struct DashboardView: View {
                 headerSection
                 statsSection
                 heroCard
+                DebtDashboardSection()
                 goalsSection
                 expensesSection
                 

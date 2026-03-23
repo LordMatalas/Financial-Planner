@@ -2,7 +2,7 @@ import SwiftUI
 import SwiftData
 
 enum OnboardingStep: Int, CaseIterable {
-    case welcome, income, fixed, goals, budget
+    case welcome, income, fixed, debts, goals, budget
 }
 
 struct OnboardingFlow: View {
@@ -15,6 +15,10 @@ struct OnboardingFlow: View {
     @State private var income: Double = 0
     @State private var payDay: Int = 1
     @State private var fixedExpenses: [TempFixedExpense] = []
+    @State private var debts: [TempDebt] = [
+        TempDebt(emoji: "💳", name: "Tarjeta de Crédito", balance: "4300000", rate: "25.19", payment: "1000000", day: "10"),
+        TempDebt(emoji: "🦷", name: "Ortodoncia", balance: "2000000", rate: "0", payment: "200000", day: "5")
+    ]
     @State private var goals: [TempSavingsGoal] = [
         TempSavingsGoal(emoji: "🏍️", name: "BMW G 310 GS", target: 13250000, monthly: 1200000)
     ]
@@ -50,12 +54,16 @@ struct OnboardingFlow: View {
                         OnboardingIncomeView(income: $income, payDay: $payDay)
                     case .fixed:
                         OnboardingFixedView(fixedExpenses: $fixedExpenses)
+                    case .debts:
+                        OnboardingDebtsView(debts: $debts)
                     case .goals:
                         OnboardingGoalsView(goals: $goals, income: income)
                     case .budget:
+                        let debtsTotal = debts.reduce(0) { $0 + (Double($1.payment) ?? 0) }
                         OnboardingBudgetView(
                             income: income,
                             fixed: fixedExpenses.reduce(0) { $0 + $1.amount },
+                            debts: debtsTotal,
                             goals: goals.reduce(0) { $0 + $1.monthly },
                             buffer: max(income * 0.10, 50_000),
                             notificationsOptIn: $notificationsOptIn,
@@ -110,6 +118,7 @@ struct OnboardingFlow: View {
         switch currentStep {
         case .income: return income > 0
         case .fixed: return true // Optional
+        case .debts: return true // Optional
         case .goals: return !goals.isEmpty && goals.allSatisfy { !$0.name.isEmpty && $0.target > 0 }
         default: return true
         }
@@ -142,6 +151,21 @@ struct OnboardingFlow: View {
         for temp in fixedExpenses {
             let fixed = FixedExpense(name: temp.name, amount: temp.amount, dueDay: temp.dueDay)
             modelContext.insert(fixed)
+        }
+        
+        // Save Debts to SwiftData
+        for temp in debts {
+            let debt = Debt(
+                name: temp.name,
+                emoji: temp.emoji,
+                debtType: temp.name.contains("Tarjeta") ? .creditCard : .fixedTerm,
+                originalBalance: Double(temp.balance) ?? 0,
+                currentBalance: Double(temp.balance) ?? 0,
+                annualInterestRate: (Double(temp.rate) ?? 0) / 100.0,
+                monthlyPayment: Double(temp.payment) ?? 0,
+                dueDay: Int(temp.day) ?? 10
+            )
+            modelContext.insert(debt)
         }
         
         // Save Goals to SwiftData

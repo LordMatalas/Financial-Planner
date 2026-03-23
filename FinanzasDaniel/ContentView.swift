@@ -1,7 +1,7 @@
 import SwiftUI
 
 enum AppTab {
-    case goals, dashboard, expenses
+    case dashboard, goals, debts, expenses
 }
 
 struct ContentView: View {
@@ -27,10 +27,12 @@ struct ContentView: View {
             // Content
             Group {
                 switch selectedTab {
-                case .goals:
-                    GoalsView()
                 case .dashboard:
                     DashboardView()
+                case .goals:
+                    GoalsView()
+                case .debts:
+                    DebtsView()
                 case .expenses:
                     ExpensesView()
                 }
@@ -45,13 +47,15 @@ struct ContentView: View {
     
     var customTabBar: some View {
         HStack(spacing: 0) {
-            TabBarButton(icon: "target", tab: .goals, selectedTab: $selectedTab)
-            Spacer()
             TabBarButton(icon: "chart.pie.fill", tab: .dashboard, selectedTab: $selectedTab)
             Spacer()
-            TabBarButton(icon: "creditcard.fill", tab: .expenses, selectedTab: $selectedTab)
+            TabBarButton(icon: "target", tab: .goals, selectedTab: $selectedTab)
+            Spacer()
+            TabBarButton(icon: "creditcard.fill", tab: .debts, selectedTab: $selectedTab)
+            Spacer()
+            TabBarButton(icon: "cart.fill", tab: .expenses, selectedTab: $selectedTab)
         }
-        .padding(.horizontal, 40)
+        .padding(.horizontal, 30)
         .frame(height: 82)
         .background(
             Rectangle()

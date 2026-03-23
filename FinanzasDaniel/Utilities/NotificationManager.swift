@@ -5,6 +5,7 @@ class NotificationScheduler: NSObject, UNUserNotificationCenterDelegate {
     static let shared = NotificationScheduler()
     
     private let fixedExpenseCategory = "FIXED_EXPENSE_CATEGORY"
+    private let debtCategory = "DEBT_CATEGORY"
     
     override private init() {
         super.init()
@@ -29,19 +30,28 @@ class NotificationScheduler: NSObject, UNUserNotificationCenterDelegate {
                                                    title: "Recordármelo mañana",
                                                    options: [])
         
-        let category = UNNotificationCategory(identifier: fixedExpenseCategory,
+        let fixedCategory = UNNotificationCategory(identifier: fixedExpenseCategory,
                                               actions: [paidAction, remindLaterAction],
                                               intentIdentifiers: [],
                                               options: [])
         
-        UNUserNotificationCenter.current().setNotificationCategories([category])
+        let debtCat = UNNotificationCategory(identifier: debtCategory,
+                                              actions: [paidAction, remindLaterAction],
+                                              intentIdentifiers: [],
+                                              options: [])
+        
+        UNUserNotificationCenter.current().setNotificationCategories([fixedCategory, debtCat])
     }
     
-    func rescheduleAll(fixedExpenses: [FixedExpense]) {
+    func rescheduleAll(fixedExpenses: [FixedExpense], debts: [Debt] = []) {
         UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
         
         for expense in fixedExpenses where expense.isActive {
             scheduleFixedExpenseReminder(expense: expense)
+        }
+        
+        for debt in debts where debt.isActive {
+            scheduleDebtReminder(debt: debt)
         }
     }
     
@@ -60,6 +70,25 @@ class NotificationScheduler: NSObject, UNUserNotificationCenterDelegate {
         
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
         let request = UNNotificationRequest(identifier: "fixed_\(expense.id)", content: content, trigger: trigger)
+        
+        UNUserNotificationCenter.current().add(request)
+    }
+    
+    private func scheduleDebtReminder(debt: Debt) {
+        let content = UNMutableNotificationContent()
+        content.title = "\(debt.emoji) Mañana toca pagar \(debt.name)"
+        content.body = "Son $\(Int(debt.monthlyPayment)). ¿Ya lo hiciste?"
+        content.sound = .default
+        content.categoryIdentifier = debtCategory
+        content.userInfo = ["debtID": debt.id.uuidString, "debtName": debt.name]
+        
+        var dateComponents = DateComponents()
+        dateComponents.day = max(1, debt.dueDay - 1)
+        dateComponents.hour = 8
+        dateComponents.minute = 0
+        
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
+        let request = UNNotificationRequest(identifier: "debt_\(debt.id)", content: content, trigger: trigger)
         
         UNUserNotificationCenter.current().add(request)
     }

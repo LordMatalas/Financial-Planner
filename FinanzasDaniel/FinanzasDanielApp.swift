@@ -11,7 +11,9 @@ struct FinanzasDanielApp: App {
             Contribution.self,
             Expense.self,
             FixedExpense.self,
-            MonthlySnapshot.self
+            MonthlySnapshot.self,
+            Debt.self,
+            DebtPayment.self
         ])
         let config = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
         do {

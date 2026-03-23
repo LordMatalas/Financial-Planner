@@ -3,6 +3,7 @@ import SwiftUI
 struct BudgetBreakdownCard: View {
     let income: Double
     let fixed: Double
+    let debts: Double
     let goals: Double
     let buffer: Double
     let variable: Double
@@ -25,6 +26,15 @@ struct BudgetBreakdownCard: View {
                     Spacer()
                     Text("−$\(Int(fixed))")
                         .foregroundColor(DesignSystem.Colors.destructive)
+                        .monospacedDigit()
+                }
+                
+                HStack {
+                    Text("Pagos de deuda")
+                        .foregroundColor(DesignSystem.Colors.textSecondary)
+                    Spacer()
+                    Text("−$\(Int(debts))")
+                        .foregroundColor(Color.accentRose)
                         .monospacedDigit()
                 }
                 

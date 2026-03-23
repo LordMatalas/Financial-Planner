@@ -24,7 +24,10 @@ struct RegisterWalletExpenseIntent: AppIntent {
             SavingsGoal.self,
             Contribution.self,
             Expense.self,
-            FixedExpense.self
+            FixedExpense.self,
+            MonthlySnapshot.self,
+            Debt.self,
+            DebtPayment.self
         ])
         
         let config = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)

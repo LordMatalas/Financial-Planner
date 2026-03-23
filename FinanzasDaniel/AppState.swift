@@ -31,22 +31,24 @@ class AppState {
     var currentMonthExpenses: Double = 0
     var currentMonthSaved: Double = 0
     var activeGoals: [SavingsGoal] = []
+    var activeDebts: [Debt] = []
     
     var currentMonthSnapshot: MonthlySnapshot?
     var previousMonthSnapshot: MonthlySnapshot?
     
     private init() {}
     
-    func recalculateSuggestedBudget(fixedExpenses: [FixedExpense], goals: [SavingsGoal]) {
+    func recalculateSuggestedBudget(fixedExpenses: [FixedExpense], debts: [Debt] = [], goals: [SavingsGoal]) {
         self.suggestedVariableBudget = BudgetCalculator.suggested(
             income: monthlyIncome,
             fixed: fixedExpenses,
+            debts: debts,
             goals: goals
         )
     }
     
-    func scheduleAllNotifications(fixedExpenses: [FixedExpense]) {
-        NotificationScheduler.shared.rescheduleAll(fixedExpenses: fixedExpenses)
+    func scheduleAllNotifications(fixedExpenses: [FixedExpense], debts: [Debt] = []) {
+        NotificationScheduler.shared.rescheduleAll(fixedExpenses: fixedExpenses, debts: debts)
     }
     
     func snapshotPreviousMonthIfNeeded(context: ModelContext) {

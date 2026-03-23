@@ -4,6 +4,8 @@ extension Color {
     static let bgBase = Color(hex: "07070F")
     static let bgSurface = Color(hex: "10101C")
     static let bgElevated = Color(hex: "18182A")
+    static let surfacePrimary = Color(hex: "10101C")
+    static let surfaceSecondary = Color(hex: "18182A")
     static let accentMint = Color(hex: "0AFFA0")
     static let accentViolet = Color(hex: "7C6FFF")
     static let accentRose = Color(hex: "FF4D72")
